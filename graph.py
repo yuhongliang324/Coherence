@@ -17,7 +17,7 @@ def get_coherence_from_adjacency(A):
     n_sent = A.shape[0]
     for i in xrange(n_sent - 1):
         for j in xrange(i + 2, n_sent):
-            A[i, j] = 0.  # (j - i)
+            A[i, j] /= (j - i)
     coherence = numpy.mean(numpy.sum(A, axis=1))
     return coherence
 
