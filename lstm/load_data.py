@@ -52,6 +52,8 @@ def load_set(doc_vecs_list):
     cur = 0
     for doc, vecs_list in doc_vecs_list.items():
         size = len(vecs_list)
+        if size == 0:
+            continue
         vecs = vecs_list[0]
         length = vecs.shape[0]
         start_batches.append(cur)
