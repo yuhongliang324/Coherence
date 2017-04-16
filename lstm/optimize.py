@@ -159,7 +159,7 @@ def train(inputs_train, inputs_test, hidden_dim=None, update='adam2', sq_loss=Fa
             best_actual_test = actual_test
             best_pred_test = pred_test
             best_epoch = epoch_index
-        elif (category and acc_test > best_acc) or ((not category) and acc_test < best_acc):
+        elif acc_test > best_acc:
             best_acc = acc_test
             best_actual_test = actual_test
             best_pred_test = pred_test

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d65838b0-3287-4750-8e3f-0a733e0c1c00" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lstm/optimize.py" afterPath="$PROJECT_DIR$/lstm/optimize.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lstm/train.py" afterPath="$PROJECT_DIR$/lstm/train.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Coherence.iws" />
@@ -25,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="optimize.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="optimize.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lstm/optimize.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="167" column="55" selection-start-line="167" selection-start-column="55" selection-end-line="167" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.47297296">
+              <caret line="161" column="32" selection-start-line="161" selection-start-column="32" selection-end-line="161" selection-end-column="32" />
               <folding>
                 <element signature="e#31#52#0" expanded="true" />
               </folding>
@@ -37,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lstm/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3918919">
-              <caret line="45" column="108" selection-start-line="45" selection-start-column="108" selection-end-line="45" selection-end-column="108" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="50" column="42" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
               <folding>
                 <element signature="e#31#46#0" expanded="true" />
               </folding>
@@ -84,8 +83,8 @@
         <option value="$PROJECT_DIR$/lstm/theano_utils.py" />
         <option value="$PROJECT_DIR$/get_sentvecs.py" />
         <option value="$PROJECT_DIR$/lstm/load_data.py" />
-        <option value="$PROJECT_DIR$/lstm/optimize.py" />
         <option value="$PROJECT_DIR$/lstm/train.py" />
+        <option value="$PROJECT_DIR$/lstm/optimize.py" />
       </list>
     </option>
   </component>
@@ -649,22 +648,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lstm/optimize.py">
+    <entry file="file://$PROJECT_DIR$/lstm/train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="167" column="55" selection-start-line="167" selection-start-column="55" selection-end-line="167" selection-end-column="55" />
+          <caret line="50" column="42" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
           <folding>
-            <element signature="e#31#52#0" expanded="true" />
+            <element signature="e#31#46#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lstm/train.py">
+    <entry file="file://$PROJECT_DIR$/lstm/optimize.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3918919">
-          <caret line="45" column="108" selection-start-line="45" selection-start-column="108" selection-end-line="45" selection-end-column="108" />
+        <state vertical-scroll-proportion="0.47297296">
+          <caret line="161" column="32" selection-start-line="161" selection-start-column="32" selection-end-line="161" selection-end-column="32" />
           <folding>
-            <element signature="e#31#46#0" expanded="true" />
+            <element signature="e#31#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
