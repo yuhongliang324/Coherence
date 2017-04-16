@@ -42,6 +42,7 @@ def get_vec(sents_pkl, out_pkl):
 
 if __name__ == '__main__':
     get_vec(accident_train_sents_pkl, accident_train_vecs_pkl)
+    '''
     get_vec(accident_test_sents_pkl, accident_test_vecs_pkl)
     get_vec(earthquake_train_sents_pkl, earthquake_train_vecs_pkl)
-    get_vec(earthquake_test_sents_pkl, earthquake_test_vecs_pkl)
+    get_vec(earthquake_test_sents_pkl, earthquake_test_vecs_pkl)'''
