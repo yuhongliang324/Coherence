@@ -49,7 +49,7 @@ def experiment(dataset='a', update='adam2', lamb=0., drop=0., sq_loss=False, mod
     out_file = 'results/' + model + '_' + dataset + '.txt'
     writer = open(out_file, 'w')
     for i in xrange(best_actual_test.shape[0]):
-        writer.write(str(best_actual_test[i]) + ',' + str(best_pred_test[i]))
+        writer.write(str(best_actual_test[i]) + ',' + str(best_pred_test[i]) + '\n')
     writer.close()
 
 
