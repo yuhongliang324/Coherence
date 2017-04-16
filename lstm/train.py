@@ -62,10 +62,7 @@ def test1():
     args.cat = bool(args.cat)
     args.sq = bool(args.sq)
 
-    if args.feat == 'text':
-        es = True
-    else:
-        es = False
+    es = True
     experiment(dataset=args.data, update=args.update, lamb=args.lamb, drop=args.drop, sq_loss=args.sq,
                model=args.model, share=args.share, category=False, early_stop=es)
 
