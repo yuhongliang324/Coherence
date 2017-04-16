@@ -26,7 +26,12 @@ def get_vec(sents_pkl, out_pkl):
 
     doc_vecs_list = {}
 
+    size = len(doc_sents_list)
+    count = 0
+
     for doc, sents_list in doc_sents_list.items():
+        count += 1
+        print '-----', count, '/', size
         vecs_list = []
         for sents in sents_list:
             vecs = encoder.encode(sents)
