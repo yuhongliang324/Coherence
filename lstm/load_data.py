@@ -25,7 +25,7 @@ def load(dataset='a'):
     doc_vecs_train_list = cPickle.load(reader)
     reader.close()
     reader = open(test_pkl)
-    doc_vecs_test_list = cPickle.load(test_pkl)
+    doc_vecs_test_list = cPickle.load(reader)
     reader.close()
 
     Xs_train, y_train, start_batches_train, end_batches_train, len_batches_train = load_set(doc_vecs_train_list)
