@@ -42,8 +42,15 @@ def experiment(dataset='a', update='adam2', lamb=0., drop=0., sq_loss=False, mod
 
     hidden_dim = min(512, Xs_train.shape[-1])
 
-    train(inputs_train, inputs_test, hidden_dim=hidden_dim, update=update, sq_loss=sq_loss, num_epoch=40,
-          lamb=lamb, model=model, share=share, category=category, drop=drop, num_class=2, early_stop=early_stop)
+    best_actual_test, best_pred_test =\
+        train(inputs_train, inputs_test, hidden_dim=hidden_dim, update=update, sq_loss=sq_loss, num_epoch=40,
+              lamb=lamb, model=model, share=share, category=category, drop=drop, num_class=2, early_stop=early_stop)
+
+    out_file = 'results/' + model + '_' + dataset + '.txt'
+    writer = open(out_file, 'w')
+    for i in xrange(best_actual_test.shape[0]):
+        writer.write(str(best_actual_test[i]) + ',' + str(best_pred_test[i]))
+    writer.close()
 
 
 def test1():
