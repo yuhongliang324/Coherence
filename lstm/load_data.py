@@ -20,6 +20,7 @@ def load(dataset='a'):
         train_pkl = earthquake_train_vecs_pkl
         test_pkl = earthquake_test_vecs_pkl
 
+    print train_pkl
     reader = open(train_pkl)
     doc_vecs_train_list = cPickle.load(train_pkl)
     reader.close()
