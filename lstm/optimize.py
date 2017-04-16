@@ -23,25 +23,23 @@ def eval(y_actual, y_predicted, category=False):
         acc = float(right) / y_actual.shape[0]
         return acc
     else:
-        return MAE(y_actual, y_predicted)
+        return Acc_comp(y_actual, y_predicted)
 
 
-def RMSE(y_actual, y_predicted):
-    rmse = sqrt(mean_squared_error(y_actual, y_predicted))
-    return rmse
-
-
-def MAE(y_actual, y_predicted):
-    dist = 0.
+def Acc_comp(y_actual, y_predicted):
+    right = 0
+    total = 0
     for i in xrange(y_actual.shape[0]):
-        dist += abs(y_actual[i] - y_predicted[i])
-    mae = dist / y_actual.shape[0]
-    return mae
-
-
-def pearson(y_actual, y_predicted):
-    r = pearsonr(y_predicted, y_actual)
-    return r[0]
+        if y_actual[i] == 1:
+            for j in xrange(i + 1, y_actual.shape[0]):
+                if y_actual[j] == 1:
+                    break
+                else:
+                    if y_predicted[i] > y_predicted[j]:
+                        right += 1.
+                    total += 1.
+    acc = right / total
+    return acc
 
 
 def test(test_model, start_batches_test, end_batches_test, len_batches_test,
@@ -67,17 +65,13 @@ def test(test_model, start_batches_test, end_batches_test, len_batches_test,
     costs_test.append(cost_avg)
     y_actual = numpy.asarray(all_actual)
     y_predicted = numpy.asarray(all_pred)
-    mae_acc = eval(y_actual, y_predicted, category=category)
-    if category:
-        print '\tTest cost = %f,\tAccuracy = %f' % (cost_avg, mae_acc)
-    else:
-        r = pearson(y_actual, y_predicted)
-        print '\tTest cost = %f,\tMAE = %f\tPearson=%f' % (cost_avg, mae_acc, r)
-    return mae_acc, y_actual, y_predicted
+    acc = eval(y_actual, y_predicted, category=category)
+    print '\tTest cost = %f,\tAccuracy = %f' % (cost_avg, acc)
+    return acc, y_actual, y_predicted
 
 
-def train(inputs_train, inputs_test, hidden_dim=None, dec=True, update='adam', sq_loss=False, activation=None,
-          lamb=0., drop=0., model='gru', share=False, category=False, num_epoch=40, num_class=None, early_stop=False):
+def train(inputs_train, inputs_test, hidden_dim=None, update='adam2', sq_loss=False,
+          lamb=0., drop=0., model='lstml', share=False, category=False, num_epoch=40, num_class=None, early_stop=False):
 
     Xs_train, y_train, start_batches_train, end_batches_train, len_batches_train = inputs_train
     Xs_test, y_test, start_batches_test, end_batches_test, len_batches_test = inputs_test
@@ -131,7 +125,7 @@ def train(inputs_train, inputs_test, hidden_dim=None, dec=True, update='adam', s
     print 'Compilation done 2'
 
     costs_train, costs_test = [], []
-    best_mae_acc = None
+    best_acc = None
     best_actual_test = None
     best_pred_test = None
     best_epoch = 0
@@ -156,26 +150,22 @@ def train(inputs_train, inputs_test, hidden_dim=None, dec=True, update='adam', s
         y_actual = numpy.asarray(all_actual)
         y_predicted = numpy.asarray(all_pred)
 
-        mae_acc = eval(y_actual, y_predicted, category=category)
-        if category:
-            print '\tTrain cost = %f,\tAccuracy = %f' % (cost_avg, mae_acc)
-        else:
-            print '\tTrain cost = %f,\tMAE = %f' % (cost_avg, mae_acc)
-        mae_acc_test, actual_test, pred_test = test(test_model, start_batches_test, end_batches_test, len_batches_test,
+        acc = eval(y_actual, y_predicted, category=category)
+        print '\tTrain cost = %f,\tAccuracy = %f' % (cost_avg, acc)
+        acc_test, actual_test, pred_test = test(test_model, start_batches_test, end_batches_test, len_batches_test,
                                                     y_test, costs_test, category=category)
-        if best_mae_acc is None:
-            best_mae_acc = mae_acc_test
+        if best_acc is None:
+            best_acc = acc_test
             best_actual_test = actual_test
             best_pred_test = pred_test
             best_epoch = epoch_index
-        elif (category and mae_acc_test > best_mae_acc) or ((not category) and mae_acc_test < best_mae_acc):
-            best_mae_acc = mae_acc_test
+        elif (category and acc_test > best_acc) or ((not category) and acc_test < best_acc):
+            best_acc = acc_test
             best_actual_test = actual_test
             best_pred_test = pred_test
             best_epoch = epoch_index
         # Early Stopping
         if early_stop and epoch_index - best_epoch >= 4 and epoch_index >= num_epoch // 4:
             break
-    r = pearson(best_actual_test, best_pred_test)
-    print 'Best Epoch = %d, Best ACC/MAE in Test = %f, Pearson = %f' % (best_epoch + 1, best_mae_acc, r)
+    print 'Best Epoch = %d, Best ACC in Test = %f' % (best_epoch + 1, best_acc)
     return best_actual_test, best_pred_test

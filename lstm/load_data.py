@@ -1,10 +1,6 @@
 __author__ = 'yuhongliang324'
-import os
-from scipy.io import loadmat
 import numpy
-import random
 import theano
-from sklearn.preprocessing import normalize
 import cPickle
 from get_sentvecs import accident_train_vecs_pkl, accident_test_vecs_pkl,\
     earthquake_train_vecs_pkl, earthquake_test_vecs_pkl
@@ -26,6 +22,10 @@ def load(dataset='a'):
     reader.close()
 
     Xs_train, y_train, start_batches_train, end_batches_train, len_batches_train = load_set(doc_vecs_train_list)
+    Xs_test, y_test, start_batches_test, end_batches_test, len_batches_test = load_set(doc_vecs_test_list)
+
+    return Xs_train, y_train, start_batches_train, end_batches_train, len_batches_train,\
+           Xs_test, y_test, start_batches_test, end_batches_test, len_batches_test
 
 
 def load_set(doc_vecs_list):
@@ -37,10 +37,10 @@ def load_set(doc_vecs_list):
         for vecs in vecs_list:
             if vecs.shape[0] > maxlen:
                 maxlen = vecs.shape[0]
-    Xs = numpy.zeros((n, maxlen, dim))
+    Xs = []
     y = []
     start_batches, end_batches, len_batches = [], [], []
-    docs = doc_vecs_list.keys()
+    # docs = doc_vecs_list.keys()  if the document names are needed
 
     cur = 0
     for doc, vecs_list in doc_vecs_list.items():
@@ -53,10 +53,19 @@ def load_set(doc_vecs_list):
 
         for i in xrange(size):
             length = vecs_list[i].shape[0]
-
+            X = numpy.zeros(maxlen, dim)
+            X[:length, :] = vecs_list[i]
+            Xs.append(X)
+            if i == 0:
+                y.append(1)
+            else:
+                y.append(0)
         cur += size
 
-    return 1
+    Xs = numpy.stack(Xs, axis=0).astype(theano.config.floatX)
+    y = numpy.asarray(y, dtype=theano.config.floatX)
+
+    return Xs, y, start_batches, end_batches, len_batches
 
 
 def test1():
