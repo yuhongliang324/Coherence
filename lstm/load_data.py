@@ -22,7 +22,7 @@ def load(dataset='a'):
 
     print train_pkl
     reader = open(train_pkl)
-    doc_vecs_train_list = cPickle.load(train_pkl)
+    doc_vecs_train_list = cPickle.load(reader)
     reader.close()
     reader = open(test_pkl)
     doc_vecs_test_list = cPickle.load(test_pkl)
