@@ -60,7 +60,7 @@ def load_set(doc_vecs_list):
 
         for i in xrange(size):
             length = vecs_list[i].shape[0]
-            X = numpy.zeros(maxlen, dim)
+            X = numpy.zeros((maxlen, dim))
             X[:length, :] = vecs_list[i]
             Xs.append(X)
             if i == 0:
