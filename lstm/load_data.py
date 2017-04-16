@@ -2,8 +2,14 @@ __author__ = 'yuhongliang324'
 import numpy
 import theano
 import cPickle
-from get_sentvecs import accident_train_vecs_pkl, accident_test_vecs_pkl,\
-    earthquake_train_vecs_pkl, earthquake_test_vecs_pkl
+import os
+from utils import dn
+
+preprocessed_root = os.path.join(dn, 'preprocessed')
+accident_train_vecs_pkl = os.path.join(preprocessed_root, 'accident_vecs_train.pkl')
+accident_test_vecs_pkl = os.path.join(preprocessed_root, 'accident_vecs_test.pkl')
+earthquake_train_vecs_pkl = os.path.join(preprocessed_root, 'earthquake_vecs_train.pkl')
+earthquake_test_vecs_pkl = os.path.join(preprocessed_root, 'earthquake_vecs_test.pkl')
 
 
 def load(dataset='a'):
