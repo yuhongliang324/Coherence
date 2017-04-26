@@ -7,7 +7,6 @@ import os
 import theano
 import numpy
 import cPickle
-from data_path import accident_train_root
 
 preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
 accident_train_sents_pkl = os.path.join(preprocessed_root, 'accident_train.pkl')
@@ -145,7 +144,7 @@ def test1():
 
 
 def test2():
-    get_sentIDs(accident_train_root, 'tmp.pkl')
+    get_sentIDs(accident_train_sents_root, 'tmp.pkl')
 
 
 if __name__ == '__main__':
