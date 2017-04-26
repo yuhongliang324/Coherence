@@ -122,6 +122,8 @@ def get_sentIDs(root_path, out_pkl):
         else:
             sents = get_sents(fpath)
         sent_ids = []
+        if len(sents) != endID - startID:
+            print 'XXX'
         for sent in sents:
             found = False
             for i in xrange(startID, endID):
@@ -130,8 +132,7 @@ def get_sentIDs(root_path, out_pkl):
                     found = True
                     break
             if not found:
-                print sent
-                print '\t', sentences[startID: endID]
+                wset = set(sent.split())
         doc_paras[doc].append(sent_ids)
     print len(sentences)
     f = open(out_pkl, 'wb')
