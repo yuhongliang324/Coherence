@@ -94,10 +94,58 @@ def get_vectors(tokens, vec_file=wordvec_file, out_file=dict_pkl):
     return token_vec
 
 
+def get_sentIDs(root_path, out_pkl):
+    def get_sents(fn):
+        reader = open(fn)
+        sents = reader.readlines()
+        reader.close()
+        sents = map(lambda x: x.strip(), sents)
+        return sents
+
+    sentence_ID = {}
+    sentences = []
+    curID = 0
+    files = os.listdir(root_path)
+    files.sort()
+    doc_paras = {}
+    for fn in files:
+        if not fn.endswith('.txt'):
+            continue
+        fpath = os.path.join(root_path, fn)
+        sents = get_sents(fpath)
+        for sent in sents:
+            if sent not in sentence_ID:
+                sentence_ID[sent] = curID
+                sentences.append([sent])
+                curID += 1
+
+    for fn in files:
+        if not fn.endswith('.txt'):
+            continue
+        sp = fn.split('.')
+        doc = '.'.join(sp[:2])
+
+        fpath = os.path.join(root_path, fn)
+        if doc not in doc_paras:
+            doc_paras[doc] = []
+        sents = get_sents(fpath)
+        sent_ids = [sentence_ID[sent] for sent in sents]
+        doc_paras[doc].append(sent_ids)
+
+    print len(sentence_ID), len(sentences)
+    f = open(out_pkl, 'wb')
+    cPickle.dump([sentences, doc_paras], f, protocol=cPickle.HIGHEST_PROTOCOL)
+    f.close()
+
+
 def test1():
     tokens = get_dict()
     get_vectors(tokens)
 
 
+def test2():
+    get_sentIDs(accident_train_sents_root, 'tmp.pkl')
+
+
 if __name__ == '__main__':
-    test1()
+    test2()
