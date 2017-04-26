@@ -5,13 +5,13 @@ from graph import get_coherence
 import numpy
 
 
-def test_graph(test_root, ent=True, verb=False):
+def test_graph(test_root, ent=True, verb=False, merge=False):
     doc_coherences = None
     if ent:
         doc_grids = load(test_root)
         doc_coherences = calculate_coherences(doc_grids)
     if verb:
-        doc_grids = load_verb(test_root)
+        doc_grids = load_verb(test_root, merge)
         doc_coherences_verb = calculate_coherences(doc_grids)
         if doc_coherences is None:
             doc_coherences = doc_coherences_verb
@@ -42,5 +42,9 @@ def calculate_coherences(doc_grids):
         doc_coherences[doc] = numpy.asarray(cohs)
     return doc_coherences
 
-
-test_graph(accident_test_root, ent=False, verb=True)
+print 'When merge == False:'
+# test_graph(accident_test_root, ent=False, verb=True, merge=False)
+# test_graph(earthquake_test_root, ent=False, verb=True, merge=False)
+print 'When merge == True'
+test_graph(accident_test_root, ent=False, verb=True, merge=True)
+# test_graph(earthquake_test_root, ent=False, verb=True, merge=True)
