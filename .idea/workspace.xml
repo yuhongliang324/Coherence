@@ -61,8 +61,8 @@
       <file leaf-file-name="neural_utils.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lstm/neural_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5540541">
-              <caret line="146" column="38" selection-start-line="146" selection-start-column="38" selection-end-line="146" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.6351351">
+              <caret line="133" column="46" selection-start-line="133" selection-start-column="46" selection-end-line="133" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -674,8 +674,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lstm/neural_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5540541">
-          <caret line="146" column="38" selection-start-line="146" selection-start-column="38" selection-end-line="146" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.6351351">
+          <caret line="133" column="46" selection-start-line="133" selection-start-column="46" selection-end-line="133" selection-end-column="46" />
           <folding />
         </state>
       </provider>

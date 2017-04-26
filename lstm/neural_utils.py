@@ -131,6 +131,7 @@ def get_sentIDs(root_path, out_pkl):
                     break
             if not found:
                 print sent
+                print '\t', sentences[startID: endID]
         doc_paras[doc].append(sent_ids)
     print len(sentences)
     f = open(out_pkl, 'wb')
