@@ -1,0 +1,6 @@
+dt nn cd nn md vb jj nn in dt jj nn .
+dt nn pos nn vbd in dt nn cd nns cd nns jj in nnp in dt jj nn .
+prp vbd in cd rb .
+cd nnp cd nns cd nns nn in dt nn dt nn nn vbd .
+nnp nnp nnp dt nn in dt jj nn in cd vbd dt jj nns in nnp nnp cc nnp jj nnp cc dt nns cc nns vbd vbn dt nnp nnp nnp vbd .
+nnp nnp nnp nnps dt nn vbn .
