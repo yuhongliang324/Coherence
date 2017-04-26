@@ -7,6 +7,7 @@ import os
 import theano
 import numpy
 import cPickle
+from utils import accident_train_root
 
 preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
 accident_train_sents_pkl = os.path.join(preprocessed_root, 'accident_train.pkl')
@@ -94,10 +95,56 @@ def get_vectors(tokens, vec_file=wordvec_file, out_file=dict_pkl):
     return token_vec
 
 
+def get_sentIDs(root_path, out_pkl):
+    def get_sents(fn):
+        reader = open(fn)
+        sents = reader.readlines()
+        reader.close()
+        sents = map(lambda x: x.strip(), sents)
+        return sents
+
+    sentences = []
+    files = os.listdir(root_path)
+    files.sort()
+    doc_paras = {}
+    startID, endID = 0, 0
+    for fn in files:
+        if not fn.endswith('.txt'):
+            continue
+        sp = fn.split('.')
+        doc = '.'.join(sp[:2])
+        fpath = os.path.join(root_path, fn)
+        if doc not in doc_paras:
+            doc_paras[doc] = []
+            sents = get_sents(fpath)
+            sentences += sents
+            startID = endID
+            endID += len(sents)
+        sents = get_sents(fpath)
+        sent_ids = []
+        for sent in sents:
+            found = False
+            for i in xrange(startID, endID):
+                if sent == sentences[i]:
+                    sent_ids.append(i)
+                    found = True
+                    break
+            if not found:
+                print sent
+        doc_paras[doc].append(sent_ids)
+    f = open(out_pkl, 'wb')
+    cPickle.dump([sentences, doc_paras], f, protocol=cPickle.HIGHEST_PROTOCOL)
+    f.close()
+
+
 def test1():
     tokens = get_dict()
     get_vectors(tokens)
 
 
+def test2():
+    get_sentIDs(accident_train_root, 'tmp.pkl')
+
+
 if __name__ == '__main__':
-    test1()
+    test2()
