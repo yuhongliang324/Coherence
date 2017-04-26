@@ -11,6 +11,9 @@ accident_test_vecs_pkl = os.path.join(preprocessed_root, 'accident_vecs_test.pkl
 earthquake_train_vecs_pkl = os.path.join(preprocessed_root, 'earthquake_vecs_train.pkl')
 earthquake_test_vecs_pkl = os.path.join(preprocessed_root, 'earthquake_vecs_test.pkl')
 
+token_id_pkl = os.path.join(preprocessed_root, 'token_id_dict.pkl')
+wordvec_pkl = os.path.join(preprocessed_root, 'id_vec_matrix.pkl')
+
 
 def load(dataset='a'):
     if dataset.startswith('a'):
@@ -75,6 +78,16 @@ def load_set(doc_vecs_list):
     y = numpy.asarray(y, dtype=theano.config.floatX)
 
     return Xs, y, start_batches, end_batches, len_batches
+
+
+def load_dict():
+    reader = open(token_id_pkl)
+    token_id = cPickle.load(reader)
+    reader.close()
+    reader = open(wordvec_pkl)
+    wordvec = cPickle.load(reader)
+    reader.close()
+    return token_id, wordvec
 
 
 def test1():
