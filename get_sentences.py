@@ -103,6 +103,63 @@ def write_all_sents(root_path, out_root, get_sents=get_sents):
         writer.close()
 
 
+def get_grid_dict(token_file):
+    # TODO
+    pass
+
+
+def get_role_codes(token_file, pos_file):
+    grid_dict = get_grid_dict(token_file)
+    B_set = set(['']) # TODO
+
+    token_f = open(token_file)
+    pos_f = open(pos_file)
+
+    token_lines = token_f.readlines()
+    pos_lines = pos_f.readlines()
+
+    token_f.close()
+    pos_f.close()
+
+    if len(lines) == 0:
+        return None
+
+    num_sent = len(lines)
+    para_role_codes = []
+
+    for i in xrange(num_sent):
+        sent_role_codes = []
+
+        tokens = token_lines[i].rstrip().split()
+        poss = pos_lines[i].rstrip().split()
+
+        for j in xrange(len(tokens)):
+            token = tokens[j]
+            pos = poss[j]
+
+            if pos.startswith('v'):
+                if token in B_set:
+                    sent_role_codes.append('B')
+                else:
+                    sent_role_codes.append('V')
+            elif pos.startswith('n'):
+                if token in grid_dict:
+                    role = grid_dict[token][i]
+                    if role == '-':
+                        print 'token: %s, pos: %s, role: -' % (token, pos)
+                        sent_role_codes.append('?')
+                    else:
+                        sent_role_codes.append(role)
+                else:
+                    print 'token: %s, pos: %s, startswith N but not in the grid_dict!' % (token, pos)
+            else:
+                sent_role_codes.append('?')
+
+        para_role_codes.append(' '.join(sent_role_codes))
+    return para_role_codes
+
+
+
 def test1():
     get_all_sentences(accident_train_root, accident_train_sents_pkl)
     get_all_sentences(accident_test_root, accident_test_sents_pkl)
