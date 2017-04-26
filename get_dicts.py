@@ -61,10 +61,10 @@ def create_dicts():
     oov_emb = id_vec.sum(axis=0) / vocab_size
     id_vec[0, :] = oov_emb
 
-    with open('id_vec_matrix.pkl', 'wb') as f:
+    with open(os.path.join(preprocessed_root, 'id_vec_matrix.pkl'), 'wb') as f:
         cPickle.dump(id_vec, f, protocol=cPickle.HIGHEST_PROTOCOL)
 
-    with open('token_id_dict.pkl', 'wb') as f:
+    with open(os.path.join(preprocessed_root, 'token_id_dict.pkl'), 'wb') as f:
         cPickle.dump(token_id, f, protocol=cPickle.HIGHEST_PROTOCOL)
 
 
