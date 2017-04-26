@@ -84,3 +84,7 @@ def get_vectors(tokens, vec_file=wordvec_file, out_file=dict_pkl):
 def test1():
     tokens = get_dict()
     get_vectors(tokens)
+
+
+if __name__ == '__main__':
+    test1()
