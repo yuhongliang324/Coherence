@@ -31,14 +31,18 @@ def create_dicts():
     with open(dict_pkl, 'r') as f:
         token_emb_dict = cPickle.load(f)
 
+    print len(token_emb_dict.keys())
+
     token_file_root_paths = [accident_train_sents_root, accident_test_sents_root, earthquake_train_sents_root, earthquake_test_sents_root]
 
     # vocab_size = 6086
-    vocab_size = 5957
+    # vocab_size = 5957
+    vocab_size = 6021
     embedding_dim = 300
     id_vec = np.zeros((vocab_size + 1, embedding_dim))
     token_id = {}
     cur_id = 1
+    count_oov = 0
     for path in token_file_root_paths:
         files = os.listdir(path)
         for fn in files:
@@ -57,12 +61,14 @@ def create_dicts():
                             else:
                                 token_id[t] = 0 # OOV, UNKNOWN
                                 print 'token %s not shown in the dict.pkl' % t
+                                count_oov += 1
         print 'cur_id: %d' % cur_id
     oov_emb = id_vec.sum(axis=0) / vocab_size
     id_vec[0, :] = oov_emb
 
-    with open(os.path.join(preprocessed_root, 'id_vec_matrix.pkl'), 'wb') as f:
-        cPickle.dump(id_vec, f, protocol=cPickle.HIGHEST_PROTOCOL)
+    print 'count_oov: %d ' % count_oov
+
+    np.save(os.path.join(preprocessed_root, 'id_vec_matrix.npy'), id_vec)
 
     with open(os.path.join(preprocessed_root, 'token_id_dict.pkl'), 'wb') as f:
         cPickle.dump(token_id, f, protocol=cPickle.HIGHEST_PROTOCOL)
