@@ -3,7 +3,7 @@ import numpy
 import theano
 import cPickle
 import os
-from utils import dn
+from data_path import dn
 
 preprocessed_root = os.path.join(dn, 'preprocessed')
 accident_train_vecs_pkl = os.path.join(preprocessed_root, 'accident_vecs_train.pkl')
