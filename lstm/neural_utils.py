@@ -7,7 +7,7 @@ import os
 import theano
 import numpy
 import cPickle
-from utils import accident_train_root
+from data_path import accident_train_root
 
 preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
 accident_train_sents_pkl = os.path.join(preprocessed_root, 'accident_train.pkl')
