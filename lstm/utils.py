@@ -79,3 +79,8 @@ def get_vectors(tokens, vec_file=wordvec_file, out_file=dict_pkl):
     print oov
     print len(oov), len(token_vec)
     return token_vec
+
+
+def test1():
+    tokens = get_dict()
+    get_vectors(tokens)
