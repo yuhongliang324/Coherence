@@ -4,12 +4,11 @@ import sys
 sys.path.append('..')
 
 import os
-from utils import dn
 import theano
 import numpy
 import cPickle
 
-preprocessed_root = os.path.join(dn, 'preprocessed')
+preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
 
 accident_train_sents_root = os.path.join(preprocessed_root, 'accident_train')
 accident_test_sents_root = os.path.join(preprocessed_root, 'accident_test')

@@ -1,13 +1,10 @@
 __author__ = 'yuhongliang324'
 
-from math import sqrt
 import sys
 
 import numpy
 import theano
 import theano.tensor as T
-from sklearn.metrics import mean_squared_error
-from scipy.stats import pearsonr
 
 sys.path.append('../')
 
