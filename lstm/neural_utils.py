@@ -148,6 +148,14 @@ def test1():
     get_vectors(tokens)
 
 
+def test11():
+    from load_data import token_id_pkl
+    reader = open(token_id_pkl)
+    tokens = cPickle.load(reader).keys()
+    reader.close()
+    get_vectors(tokens)
+
+
 def test2():
     token_id, _ = load_dict()
     get_sentIDs(accident_train_sents_root, token_id, 'tmp.pkl')
