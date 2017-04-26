@@ -4,11 +4,17 @@ import sys
 sys.path.append('..')
 
 import os
-from get_sentences import accident_train_sents_root, accident_test_sents_root,\
-    earthquake_train_sents_root, earthquake_test_sents_root, preprocessed_root
+from utils import dn
 import theano
 import numpy
 import cPickle
+
+preprocessed_root = os.path.join(dn, 'preprocessed')
+
+accident_train_sents_root = os.path.join(preprocessed_root, 'accident_train')
+accident_test_sents_root = os.path.join(preprocessed_root, 'accident_test')
+earthquake_train_sents_root = os.path.join(preprocessed_root, 'earthquake_train')
+earthquake_test_sents_root = os.path.join(preprocessed_root, 'earthquake_test')
 
 wordvec_file = '/usr0/home/hongliay/word_vectors/glove.840B.300d.txt'
 dict_pkl = os.path.join(preprocessed_root, 'dict.pkl')
