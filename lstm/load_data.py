@@ -17,7 +17,7 @@ earthquake_train_sents_pkl2 = os.path.join(preprocessed_root, 'earthquake_train2
 earthquake_test_sents_pkl2 = os.path.join(preprocessed_root, 'earthquake_test2.pkl')
 
 token_id_pkl = os.path.join(preprocessed_root, 'token_id_dict.pkl')
-wordvec_pkl = os.path.join(preprocessed_root, 'id_vec_matrix.pkl')
+wordvec_npy = os.path.join(preprocessed_root, 'id_vec_matrix.npy')
 
 
 def load(dataset='a'):
@@ -89,9 +89,7 @@ def load_dict():
     reader = open(token_id_pkl)
     token_id = cPickle.load(reader)
     reader.close()
-    reader = open(wordvec_pkl)
-    wordvec = cPickle.load(reader)
-    reader.close()
+    wordvec = numpy.load(wordvec_npy)
     return token_id, wordvec
 
 
