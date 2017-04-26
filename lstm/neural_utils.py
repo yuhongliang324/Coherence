@@ -94,7 +94,7 @@ def get_vectors(tokens, vec_file=wordvec_file, out_file=dict_pkl):
     return token_vec
 
 
-def get_sentIDs(root_path, out_pkl):
+def get_sentIDs(root_path, token_ID, out_pkl):
     def get_sents(fn):
         reader = open(fn)
         sents = reader.readlines()
@@ -104,6 +104,7 @@ def get_sentIDs(root_path, out_pkl):
 
     sentence_ID = {}
     sentences = []
+    sent_tokenids = []
     curID = 0
     files = os.listdir(root_path)
     files.sort()
@@ -116,7 +117,10 @@ def get_sentIDs(root_path, out_pkl):
         for sent in sents:
             if sent not in sentence_ID:
                 sentence_ID[sent] = curID
-                sentences.append([sent])
+                sentences.append(sent)
+                tokens = sent.split()
+                tokenids = [token_ID[token] for token in tokens]
+                sent_tokenids.append(tokenids)
                 curID += 1
 
     for fn in files:
@@ -134,7 +138,7 @@ def get_sentIDs(root_path, out_pkl):
 
     print len(sentence_ID), len(sentences)
     f = open(out_pkl, 'wb')
-    cPickle.dump([sentences, doc_paras], f, protocol=cPickle.HIGHEST_PROTOCOL)
+    cPickle.dump([sentences, sent_tokenids, doc_paras], f, protocol=cPickle.HIGHEST_PROTOCOL)
     f.close()
 
 
