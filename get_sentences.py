@@ -14,7 +14,12 @@ accident_test_sents_root = os.path.join(preprocessed_root, 'accident_test')
 earthquake_train_sents_root = os.path.join(preprocessed_root, 'earthquake_train')
 earthquake_test_sents_root = os.path.join(preprocessed_root, 'earthquake_test')
 
-pattern = re.compile(r'\(\w+? [A-Z]+? "(.+?)"\)')
+accident_train_sents_pos_root = os.path.join(preprocessed_root, 'accident_train_pos')
+accident_test_sents_pos_root = os.path.join(preprocessed_root, 'accident_test_pos')
+earthquake_train_sents_pos_root = os.path.join(preprocessed_root, 'earthquake_train_pos')
+earthquake_test_sents_pos_root = os.path.join(preprocessed_root, 'earthquake_test_pos')
+
+pattern = re.compile(r'\(\w+? ([A-Z]+?) ".+?"\)')
 
 
 def get_all_sentences(root_path, out_pkl):
@@ -61,7 +66,28 @@ def get_sents(parsed_file):
     return sents
 
 
-def write_all_sents(root_path, out_root):
+def get_sents2(parsed_file):
+    reader = open(parsed_file)
+    lines = reader.readlines()
+    reader.close()
+    lines = map(lambda x: x.strip(), lines)
+    if len(lines) == 0:
+        return None
+    lines = lines[1:-1]
+
+    num_sent = len(lines)
+    sents = []
+    for i in xrange(num_sent):
+        words = re.findall(pattern, lines[i])
+        words = map(lambda x: x.lower(), words)
+        sent = ' '.join(words) + '.'
+        sents.append(sent)
+    return sents
+
+
+def write_all_sents(root_path, out_root, get_sents=get_sents):
+    if not os.path.isdir(out_root):
+        os.mkdir(out_root)
     files = os.listdir(root_path)
     files.sort()
     for fn in files:
@@ -90,6 +116,13 @@ def test2():
     write_all_sents(earthquake_train_root, earthquake_train_sents_root)
     write_all_sents(earthquake_test_root, earthquake_test_sents_root)
 
+
+def test3():
+    write_all_sents(accident_train_root, accident_train_sents_pos_root, get_sents=get_sents)
+    write_all_sents(accident_test_root, accident_test_sents_pos_root, get_sents=get_sents)
+    write_all_sents(earthquake_train_root, earthquake_train_sents_pos_root, get_sents=get_sents)
+    write_all_sents(earthquake_test_root, earthquake_test_sents_pos_root, get_sents=get_sents)
+
 if __name__ == '__main__':
-    test2()
+    test3()
 
