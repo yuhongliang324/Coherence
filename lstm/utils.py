@@ -1,4 +1,8 @@
 __author__ = 'yuhongliang324'
+
+import sys
+sys.path.append('..')
+
 import os
 from get_sentences import accident_train_sents_root, accident_test_sents_root,\
     earthquake_train_sents_root, earthquake_test_sents_root, preprocessed_root
