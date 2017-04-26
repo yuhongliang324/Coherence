@@ -120,7 +120,8 @@ def get_sentIDs(root_path, out_pkl):
             sentences += sents
             startID = endID
             endID += len(sents)
-        sents = get_sents(fpath)
+        else:
+            sents = get_sents(fpath)
         sent_ids = []
         for sent in sents:
             found = False
@@ -132,6 +133,7 @@ def get_sentIDs(root_path, out_pkl):
             if not found:
                 print sent
         doc_paras[doc].append(sent_ids)
+    print len(sentences)
     f = open(out_pkl, 'wb')
     cPickle.dump([sentences, doc_paras], f, protocol=cPickle.HIGHEST_PROTOCOL)
     f.close()
