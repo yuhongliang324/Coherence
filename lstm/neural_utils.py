@@ -9,6 +9,10 @@ import numpy
 import cPickle
 
 preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
+accident_train_sents_pkl = os.path.join(preprocessed_root, 'accident_train.pkl')
+accident_test_sents_pkl = os.path.join(preprocessed_root, 'accident_test.pkl')
+earthquake_train_sents_pkl = os.path.join(preprocessed_root, 'earthquake_train.pkl')
+earthquake_test_sents_pkl = os.path.join(preprocessed_root, 'earthquake_test.pkl')
 
 accident_train_sents_root = os.path.join(preprocessed_root, 'accident_train')
 accident_test_sents_root = os.path.join(preprocessed_root, 'accident_test')
