@@ -11,6 +11,11 @@ accident_test_vecs_pkl = os.path.join(preprocessed_root, 'accident_vecs_test.pkl
 earthquake_train_vecs_pkl = os.path.join(preprocessed_root, 'earthquake_vecs_train.pkl')
 earthquake_test_vecs_pkl = os.path.join(preprocessed_root, 'earthquake_vecs_test.pkl')
 
+accident_train_sents_pkl2 = os.path.join(preprocessed_root, 'accident_train2.pkl')
+accident_test_sents_pkl2 = os.path.join(preprocessed_root, 'accident_test2.pkl')
+earthquake_train_sents_pkl2 = os.path.join(preprocessed_root, 'earthquake_train2.pkl')
+earthquake_test_sents_pkl2 = os.path.join(preprocessed_root, 'earthquake_test2.pkl')
+
 token_id_pkl = os.path.join(preprocessed_root, 'token_id_dict.pkl')
 wordvec_pkl = os.path.join(preprocessed_root, 'id_vec_matrix.pkl')
 

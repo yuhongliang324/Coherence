@@ -12,4 +12,3 @@ accident_test_root = os.path.join(accident_data_root, 'test')
 earthquake_data_root = os.path.join(dn, 'permutation/earthquake')
 earthquake_train_root = os.path.join(earthquake_data_root, 'train')
 earthquake_test_root = os.path.join(earthquake_data_root, 'test')
-

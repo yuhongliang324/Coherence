@@ -7,7 +7,8 @@ import os
 import theano
 import numpy
 import cPickle
-from load_data import load_dict
+from load_data import load_dict, accident_train_sents_pkl2, accident_test_sents_pkl2,\
+    earthquake_train_sents_pkl2, earthquake_test_sents_pkl2
 
 preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
 accident_train_sents_pkl = os.path.join(preprocessed_root, 'accident_train.pkl')
@@ -158,8 +159,11 @@ def test11():
 
 def test2():
     token_id, _ = load_dict()
-    get_sentIDs(accident_train_sents_root, token_id, 'tmp.pkl')
+    get_sentIDs(accident_train_sents_root, token_id, accident_train_sents_pkl2)
+    get_sentIDs(accident_test_sents_root, token_id, accident_test_sents_pkl2)
+    get_sentIDs(earthquake_train_sents_root, token_id, earthquake_train_sents_pkl2)
+    get_sentIDs(earthquake_test_sents_root, token_id, earthquake_test_sents_pkl2)
 
 
 if __name__ == '__main__':
-    test11()
+    test2()
