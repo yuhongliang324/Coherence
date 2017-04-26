@@ -123,7 +123,8 @@ def get_grid_dict(token_file):
 
 def get_role_codes(token_file, pos_file):
     grid_dict = get_grid_dict(token_file)
-    B_set = set(['be', 'am', 'is', 'are', 'was', 'were', 'being', 'been']) # might add more "stop verbs" into this list!
+    # B_set = set(['be', 'am', 'is', 'are', 'was', 'were', 'being', 'been']) # might add more "stop verbs" into this list!
+    B_set = set(['be', 'am', 'is', 'are', 'was', 'were', 'being', 'been', 'have', 'has', 'had', 'having']) # might add more "stop verbs" into this list!
 
     token_f = open(token_file)
     pos_f = open(pos_file)
@@ -164,9 +165,9 @@ def get_role_codes(token_file, pos_file):
                     else:
                         sent_role_codes.append(role)
                 else:
-                    print 'token_file: %s\npos_file: %s' % (token_file, pos_file)
+                    # print 'token_file: %s\npos_file: %s' % (token_file, pos_file)
                     print 'token: %s, pos: %s, startswith N but not in the grid_dict!' % (token, pos)
-                    sent_role_codes.append('X')
+                    sent_role_codes.append('?')
             else:
                 sent_role_codes.append('?')
 
@@ -194,7 +195,7 @@ def write_all_role_codes(root_path, dataset, out_root):
             writer.close()
             continue
         for role_code in role_codes:
-            writer.write(role_code[:-1] + '.\n')
+            writer.write(role_code[:-1] + '?\n')
         writer.close()
 
 
