@@ -1,0 +1,16 @@
+the pilot indicated that engine cruise setting was 2,350 rpm and that he had leaned the mixture when at cruising altitude .
+according to the pilot operating handbook poh appropriate for the serial number of the accident aircraft the fuel flow was listed as 9.5 gallons/hour for a power setting of 65-percent of maximum power .
+the pilot reported that he had planned on burning 10-gallons per hour from which he calculated an endurance of 4-hours 48-minutes .
+the engine experienced two subsequent power losses before the engine was unable to be restarted .
+the total duration of the trip as recorded by the pilot 's global positioning system unit was 3-hours 52-minutes .
+the final engine failure was experienced 2-miles from the destination airport .
+the pilot reported that he first experienced engine power interruptions approximately 10-miles north of the destination airport .
+the poh lists the maximum useable fuel capacity as 48-gallons .
+the aircraft 's hobbs meter indicated that 3.9-hours had elapsed from the initial departure from hfy .
+there was an airport post-air airport 7l8 indianapolis indiana located 028.4 degrees-magnetic from the destination airport at a distance of 8.1-nautical miles .
+the pilot was able to restart the engine after selecting the other fuel tank .
+during cruise flight 10-miles from the destination airport the engine quit .
+the pilot stated that he executed a forced landing but was unable to reach runway 19 and impacted the airport perimeter fence during the approach .
+the proposed flight was to depart greenwood municipal airport hfy greenwood indiana fly to waukegan regional airport ugn waukegan illinois and return to hfy .
+post-accident investigation failed to find any fuel in the fuel strainer bowl fuel line leading to the carburetor or fuel filter located on the electric fuel pump .
+utilizing 48-gallons of useable fuel and a flight time of 3.9-hours results in a calculated fuel flow of approximately 12.307 gallons/hour .

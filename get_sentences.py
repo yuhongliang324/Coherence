@@ -9,6 +9,11 @@ accident_test_sents_pkl = os.path.join(preprocessed_root, 'accident_test.pkl')
 earthquake_train_sents_pkl = os.path.join(preprocessed_root, 'earthquake_train.pkl')
 earthquake_test_sents_pkl = os.path.join(preprocessed_root, 'earthquake_test.pkl')
 
+accident_train_sents_root = os.path.join(preprocessed_root, 'accident_train')
+accident_test_sents_root = os.path.join(preprocessed_root, 'accident_test')
+earthquake_train_sents_root = os.path.join(preprocessed_root, 'earthquake_train')
+earthquake_test_sents_root = os.path.join(preprocessed_root, 'earthquake_test')
+
 pattern = re.compile(r'\(\w+? [A-Z]+? "(.+?)"\)')
 
 
@@ -56,9 +61,35 @@ def get_sents(parsed_file):
     return sents
 
 
-if __name__ == '__main__':
+def write_all_sents(root_path, out_root):
+    files = os.listdir(root_path)
+    files.sort()
+    for fn in files:
+        if not fn.endswith('.parsed'):
+            continue
+        sents = get_sents(os.path.join(root_path, fn))
+        writer = open(os.path.join(out_root, fn).replace('parsed', 'txt'), 'w')
+        if sents is None:
+            writer.close()
+            continue
+        for sent in sents:
+            writer.write(sent[:-1] + ' .\n')
+        writer.close()
+
+
+def test1():
     get_all_sentences(accident_train_root, accident_train_sents_pkl)
     get_all_sentences(accident_test_root, accident_test_sents_pkl)
     get_all_sentences(earthquake_train_root, earthquake_train_sents_pkl)
     get_all_sentences(earthquake_test_root, earthquake_test_sents_pkl)
+
+
+def test2():
+    write_all_sents(accident_train_root, accident_train_sents_root)
+    write_all_sents(accident_test_root, accident_test_sents_root)
+    write_all_sents(earthquake_train_root, earthquake_train_sents_root)
+    write_all_sents(earthquake_test_root, earthquake_test_sents_root)
+
+if __name__ == '__main__':
+    test2()
 

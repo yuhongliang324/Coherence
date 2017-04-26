@@ -1,0 +1,15 @@
+the breach occurred in the turbine plane between approximately the 3 o'clock and 9 o'clock positions .
+the change required modification of the lpt case nozzle lock holes .
+in march 1994 the manufacturer issued another service bulletin sb 72-1082 which t introduced a newly designed nozzle lock .
+there were two previously reported failures of sb 72-1082 lpt nozzle locks discovered during routine under-cowl inspections .
+at v1 the dc-10-30 's number 1 engine a general electric cf6-50c2 experienced a casing breach when the 2nd-stage low pressure turbine lpt anti-rotation nozzle locks failed .
+in may 1993 the engine manufacturer issued a service bulletin to replace existing nozzle locks with ones that t had thicker posts and arms .
+according to the engine manufacturer the failures were intergranular suggesting either stress rupture or sustained peak low cycle fatigue .
+in one case all of the 2nd-stage nozzle locks were broken .
+in the second case two 4th-stage nozzle locks had failed but there was no collateral damage .
+safety board examination of the only two recovered 2nd-stage nozzle locks from the accident engine along with a section of casing with a nozzle lock stud attached revealed intergranular fracture features degradation at the surface of the fracture features and grain boundaries typical of oxidation damage .
+the new locks which t were installed on the accident engine utilized original diameter stud shanks but were manufactured from a different material and did not require modification of the lpt case .
+debris from the breach resulted in collateral damage to the numbers and 3 engines the fuselage and the left landing gear .
+an examination of a cracked 2nd stage nozzle lock from a comparison engine also revealed oxidation and intergranular fracture features consistent with stress rupture .
+the nozzle segments had rotated 120 degrees within the lpt case but the case itself was not breached .
+the intergranular fractures and oxidation damage found at the grain boundaries were consistent with stress rupture .

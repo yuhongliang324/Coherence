@@ -1,0 +1,8 @@
+the pilot experienced a partial loss of engine power while established in an out of ground effect hover at 150 feet agl and landed hard in the resulting autorotation .
+the balls were ejected into the gear case and one was ingested by the oil pump which t caused internal jamming and the resultant shearing of the splined adapter which t drives the oil pump .
+the mechanic reported that he had replaced the number 2.5 bearing and the spur adapter gear shaft 265 hours and 4 months before the accident which t would have provided access to the gearbox to accomplish the bulletin .
+the aft bearing gear case cover of the fcu/oil pump drive spur gear had disintegrated due to failure of the ribbon-type ball separator which t was found in the bottom of the gearbox in two pieces and deformed .
+allison ceb 1228 issued november 20 1985 calls for bearings with the ribbon-type pressed steel separator to be replaced with bearings that t incorporate a one-piece machined steel separator .
+the ball separator was manufactured from an austenitic stainless steel instead of aisi 1010 as specified by the manufacturer and the material exceeded allowable hardness specifications .
+postcrash examination of the engine revealed that the turbine had experienced oil starvation due to a failure of the oil pump .
+compliance was due at the next accessory gearbox repair when the gearbox was opened .

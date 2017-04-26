@@ -1,0 +1,9 @@
+also the afm stipulated the minimum engine speeds which needed to be maintained while operating in icing conditions it also required that the thrust management system tms be disconnected in icing conditions .
+the 2 engine was restarted before making an emergency landing at the des moines airport .
+the 1 and 2 engines were shut down due to high turbine gas temperatures .
+the captain reported that the airplane had been flown into severe icing conditions .
+information from the flight data recorder indicated that during descent from flight level 290 an elevator oscillation occurred .
+there were indications that the tms was disconnected about 230 seconds after engine roll-back began .
+the aircraft flight manual afm prohibited flight in icing conditions above 26,000 feet except when necessary for descent .
+additionally the afm did not provide accurate information concerning in cloud ' correction factor for the outside temperature thermometer .
+while operating in clouds at flight level 290 in an area with thunderstorms and turbulence the airplane experienced a loss of power in all four engines .
