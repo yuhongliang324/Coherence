@@ -100,15 +100,15 @@ class RNN(object):
         return C_t, H_t
 
     def build_model(self):
-        x_full = T.imatrix()  # (max_len,)
-        y_full = T.imatrix()  # (max_len,)
+        x_full = T.ivector()  # (max_len,)
+        y_full = T.ivector()  # (max_len,)
         lenx = T.iscalar()
         leny = T.iscalar()
         x = x_full[: lenx]  # (lenx,)
         y = y_full[: leny]  # (leny,)
         X = self.E[x]  # (lenx, 300)
         Yc = self.E[y[:-1]]  # (leny - 1, 300)
-        yn = y[1:] # (leny - 1,)
+        yn = y[1:]  # (leny - 1,)
 
         [_, H_enc], _ = theano.scan(self.encode_step, sequences=X,
                                     outputs_info=[T.zeros((self.hidden_dim,),
