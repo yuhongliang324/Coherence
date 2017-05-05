@@ -49,11 +49,13 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
 
     n_class, input_dim = E_old.shape[0], E_old.shape[1]
     model = RNN(E, input_dim, hidden_dim, n_class)
-    vars = model.build_model()
+    variables = model.build_model()
 
-    x_full, y_full, lenx, leny, is_train, prob = vars['x'], vars['y'], vars['lenx'], vars['leny'], vars['is_train'], vars['prob']
-    att, pred, loss, cost, updates = vars['att'], vars['pred'], vars['loss'], vars['cost'], vars['updates']
-    acc = vars['acc']
+    x_full, y_full, lenx, leny, is_train, prob = variables['x'], variables['y'], variables['lenx'], variables['leny'],\
+                                                 variables['is_train'], variables['prob']
+    att, pred, loss, cost, updates = variables['att'], variables['pred'], variables['loss'], variables['cost'],\
+                                     variables['updates']
+    acc = variables['acc']
 
     xid, yid = T.iscalar(), T.iscalar()
     train_model = theano.function(inputs=[xid, yid, is_train],
@@ -106,26 +108,47 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
         cost_epoch /= iter_index
         print 'Training epoch = %d, prob = %.5f, acc = %.5f, cost = %.4f'\
               % (epoch_index + 1, prob_epoch, acc_epoch, cost_epoch)
+        validate(test_model, discs_test, disc_labels_test)
 
 
 def validate(test_model, discs_test, discs_labels_test):
     iter_index = 0
-    prob_epoch, acc_epoch, cost_epoch = 0., 0., 0.
+    prob_pred = []
     for disc, label in zip(discs_test, discs_labels_test):
-        if label == 0:
-            continue
         n_sent = len(disc)
+        p = 0.
         for i in xrange(n_sent - 1):
             xid, yid = disc[i], disc[i + 1]
             prob, acc, cost = test_model(xid, yid, 0)
-            prob_epoch += prob
-            acc_epoch += acc
-            cost_epoch += cost
+            p += prob
             iter_index += 1
+        p /= n_sent - 1
+        prob_pred.append(p)
 
-    prob_epoch /= iter_index
-    acc_epoch /= iter_index
-    cost_epoch /= iter_index
-    print 'Test prob = %.5f, acc = %.5f, cost = %.4f'\
-          % (prob_epoch, acc_epoch, cost_epoch)
+    acc = Acc_comp(discs_labels_test, prob_pred)
 
+    print 'Test Accuracy = %.5f' % acc
+
+
+def Acc_comp(y_actual, y_predicted):
+    right = 0
+    total = 0
+    for i in xrange(len(y_actual)):
+        if y_actual[i] == 1:
+            for j in xrange(i + 1, y_actual.shape[0]):
+                if y_actual[j] == 1:
+                    break
+                else:
+                    if y_predicted[i] > y_predicted[j]:
+                        right += 1.
+                    total += 1.
+    acc = right / total
+    return acc
+
+
+def test1():
+    classify(accident_train_pkl, accident_test_pkl)
+
+
+if __name__ == '__main__':
+    test1()

@@ -127,7 +127,10 @@ class RNN(object):
         rep_dec = T.dot(H_dec, self.W) + self.b  # (leny - 1, n_class)
         rep_dec = dropout(rep_dec, is_train, drop_ratio=self.drop)  # (leny - 1, n_class)
 
-        prob = T.nnet.softmax(rep_dec)
+        prob = T.nnet.softmax(rep_dec)  # (leny - 1, n_class)
+        yn_onehot = T.extra_ops.to_one_hot(yn, self.n_class)  # (leny - 1, n_class)
+        prob_trueval = T.sum(yn_onehot, axis=1)  # (leny - 1,)
+        prob_trueval = T.mean(prob_trueval)
         pred = T.argmax(prob, axis=-1)
 
         acc = T.mean(T.eq(pred, yn))
@@ -136,7 +139,7 @@ class RNN(object):
 
         updates = self.optimize(cost, self.theta)
 
-        ret = {'x': x_full, 'y': y_full, 'lenx': lenx, 'leny': leny, 'is_train': is_train, 'prob': prob,
+        ret = {'x': x_full, 'y': y_full, 'lenx': lenx, 'leny': leny, 'is_train': is_train, 'prob': prob_trueval,
                'att': None, 'pred': pred, 'loss': loss, 'cost': cost, 'updates': updates,
                'acc': acc}
         return ret
