@@ -129,7 +129,7 @@ class RNN(object):
 
         prob = T.nnet.softmax(rep_dec)  # (leny - 1, n_class)
         yn_onehot = T.extra_ops.to_one_hot(yn, self.n_class)  # (leny - 1, n_class)
-        prob_trueval = T.sum(yn_onehot, axis=1)  # (leny - 1,)
+        prob_trueval = T.sum(prob * yn_onehot, axis=1)  # (leny - 1,)
         prob_trueval = T.mean(prob_trueval)
         pred = T.argmax(prob, axis=-1)
 
