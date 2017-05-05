@@ -58,6 +58,7 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
     acc = variables['acc']
 
     xid, yid = T.iscalar(), T.iscalar()
+    print 'Compiling function'
     train_model = theano.function(inputs=[xid, yid, is_train],
                                   outputs=[prob, acc, cost], updates=updates,
                                   givens={
@@ -65,6 +66,7 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
                                       lenx: lenxs_train[xid], leny: lenys_train[yid]
                                   },
                                   on_unused_input='ignore', mode='FAST_RUN')
+    print 'Compilation done 1'
     test_model = theano.function(inputs=[xid, yid, is_train],
                                  outputs=[prob, acc, cost],
                                  givens={
@@ -72,6 +74,7 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
                                      lenx: lenxs_test[xid], leny: lenys_test[yid]
                                  },
                                  on_unused_input='ignore', mode='FAST_RUN')
+    print 'Compilation done 2'
 
     report_iter = 100
 
