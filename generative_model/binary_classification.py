@@ -117,6 +117,7 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
 def validate(test_model, discs_test, discs_labels_test):
     iter_index = 0
     prob_pred = []
+    count = 0
     for disc, label in zip(discs_test, discs_labels_test):
         n_sent = len(disc)
         p = 0.
@@ -127,6 +128,9 @@ def validate(test_model, discs_test, discs_labels_test):
             iter_index += 1
         p /= n_sent - 1
         prob_pred.append(p)
+        count += 1
+        if count % 100 == 0:
+            print count, '/', len(discs_test)
 
     acc = Acc_comp(discs_labels_test, prob_pred)
 
