@@ -39,8 +39,8 @@
       <file leaf-file-name="gen.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generative_model/gen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5495283">
-              <caret line="189" column="98" selection-start-line="189" selection-start-column="98" selection-end-line="189" selection-end-column="98" />
+            <state vertical-scroll-proportion="0.6462264">
+              <caret line="189" column="100" selection-start-line="189" selection-start-column="100" selection-end-line="189" selection-end-column="100" />
               <folding>
                 <element signature="e#5825#7863#0" expanded="false" />
               </folding>
@@ -793,8 +793,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/generative_model/gen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5495283">
-          <caret line="189" column="98" selection-start-line="189" selection-start-column="98" selection-end-line="189" selection-end-column="98" />
+        <state vertical-scroll-proportion="0.6462264">
+          <caret line="189" column="100" selection-start-line="189" selection-start-column="100" selection-end-line="189" selection-end-column="100" />
           <folding>
             <element signature="e#5825#7863#0" expanded="false" />
           </folding>
