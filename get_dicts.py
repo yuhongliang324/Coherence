@@ -74,7 +74,34 @@ def create_dicts():
         cPickle.dump(token_id, f, protocol=cPickle.HIGHEST_PROTOCOL)
 
 
+def create_pid2pos_pos2pid_dict():
+    pos_file_root_paths = [accident_train_sents_pos_root, accident_test_sents_pos_root, earthquake_train_sents_pos_root, earthquake_test_sents_pos_root]
+
+    pid_pos = {}
+    pos_pid = {}
+    cur_id = 0
+    for path in pos_file_root_paths:
+        files = os.listdir(path)
+        for fn in files:
+            with open(os.path.join(path, fn), 'r') as f:
+                for raw_line in f:
+                    pos_tags = raw_line.rstrip().split()
+
+                    for p in pos_tags:
+                        if p in pos_pid:
+                            continue
+                        else:
+                            pos_pid[p] = cur_id
+                            pid_pos[cur_id] = p
+                            cur_id += 1
+
+        print 'cur_id: %d' % cur_id
+
+    with open(os.path.join(preprocessed_root, 'pid2pos_pos2pid_dict.pkl'), 'wb') as f:
+        cPickle.dump([pid_pos, pos_pid], f, protocol=cPickle.HIGHEST_PROTOCOL)
+
 
 if __name__ == '__main__':
     # test3()
-    create_dicts()
+    # create_dicts()
+    create_pid2pos_pos2pid_dict()

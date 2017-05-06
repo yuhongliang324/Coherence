@@ -9,8 +9,10 @@ import numpy
 import cPickle
 from load_data import load_dict, accident_train_sents_pkl2, accident_test_sents_pkl2,\
     earthquake_train_sents_pkl2, earthquake_test_sents_pkl2
+from utils import dn
 
-preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
+# preprocessed_root = '/usr0/home/hongliay/code/Coherence/preprocessed'
+preprocessed_root = os.path.join(dn, 'preprocessed')
 accident_train_sents_pkl = os.path.join(preprocessed_root, 'accident_train.pkl')
 accident_test_sents_pkl = os.path.join(preprocessed_root, 'accident_test.pkl')
 earthquake_train_sents_pkl = os.path.join(preprocessed_root, 'earthquake_train.pkl')
@@ -20,6 +22,11 @@ accident_train_sents_root = os.path.join(preprocessed_root, 'accident_train')
 accident_test_sents_root = os.path.join(preprocessed_root, 'accident_test')
 earthquake_train_sents_root = os.path.join(preprocessed_root, 'earthquake_train')
 earthquake_test_sents_root = os.path.join(preprocessed_root, 'earthquake_test')
+
+accident_train_sents_pkl3 = os.path.join(preprocessed_root, 'accident_train3.pkl')
+accident_test_sents_pkl3 = os.path.join(preprocessed_root, 'accident_test3.pkl')
+earthquake_train_sents_pkl3 = os.path.join(preprocessed_root, 'earthquake_train3.pkl')
+earthquake_test_sents_pkl3 = os.path.join(preprocessed_root, 'earthquake_test3.pkl')
 
 wordvec_file = '/usr0/home/hongliay/word_vectors/glove.840B.300d.txt'
 dict_pkl = os.path.join(preprocessed_root, 'dict.pkl')
@@ -144,6 +151,72 @@ def get_sentIDs(root_path, token_ID, out_pkl):
     f.close()
 
 
+def get_sentIDs_pids_rids(root_path, token_ID, out_pkl, pos_pid, role_rid):
+    def get_sents(fn):
+        reader = open(fn)
+        sents = reader.readlines()
+        reader.close()
+        sents = map(lambda x: x.strip(), sents)
+        return sents
+
+    sentence_ID = {}
+    sentences = []
+    sent_tokenids = []
+    sent_pids, sent_rids = [], []
+    curID = 0
+    files = os.listdir(root_path)
+    files.sort()
+    doc_paras = {}
+    for fn in files:
+        if not fn.endswith('.txt'):
+            continue
+        fpath = os.path.join(root_path, fn)
+        sents = get_sents(fpath)
+
+        pos_fpath = os.path.join(root_path + '_pos', fn)
+        lines_of_poss = get_sents(pos_fpath)
+        role_fpath = os.path.join(root_path + '_role_code', fn)
+        lines_of_roles = get_sents(role_fpath)
+
+        for line_idx, sent in enumerate(sents):
+            if sent not in sentence_ID:
+                sentence_ID[sent] = curID
+                sentences.append(sent)
+                tokens = sent.split()
+                tokenids = [token_ID[token] for token in tokens]
+                sent_tokenids.append(tokenids)
+
+                pids = [pos_pid[pos] for pos in lines_of_poss[line_idx].split()]
+                sent_pids.append(pids)
+
+                rids = [role_rid[role] for role in lines_of_roles[line_idx].split()]
+                sent_rids.append(rids)
+
+                assert len(tokenids) == len(pids)
+                assert len(tokenids) == len(rids)
+
+                curID += 1
+
+    for fn in files:
+        if not fn.endswith('.txt'):
+            continue
+        sp = fn.split('.')
+        doc = '.'.join(sp[:2])
+
+        fpath = os.path.join(root_path, fn)
+        if doc not in doc_paras:
+            doc_paras[doc] = []
+        sents = get_sents(fpath)
+        sent_ids = [sentence_ID[sent] for sent in sents]
+        doc_paras[doc].append(sent_ids)
+
+    print len(sentence_ID), len(sentences), len(sent_tokenids), len(sent_pids), len(sent_rids)
+    f = open(out_pkl, 'wb')
+    cPickle.dump([sentences, sent_tokenids, doc_paras, sent_pids, sent_rids], f, protocol=cPickle.HIGHEST_PROTOCOL)
+    f.close()
+
+
+
 def test1():
     tokens = get_dict()
     get_vectors(tokens)
@@ -165,5 +238,22 @@ def test2():
     get_sentIDs(earthquake_test_sents_root, token_id, earthquake_test_sents_pkl2)
 
 
+def test3():
+    token_id, _ = load_dict()
+
+    pid2pos_pos2pid_dict_pkl = '../preprocessed/pid2pos_pos2pid_dict.pkl'
+    with open(pid2pos_pos2pid_dict_pkl, 'rb') as f:
+        _, pos_pid = cPickle.load(f)
+
+    role_rid = {'S':0, 'O':1, 'X':'2', 'B':3, 'V':4, '?':5}
+
+    get_sentIDs_pids_rids(accident_train_sents_root, token_id, accident_train_sents_pkl3, pos_pid, role_rid)
+    get_sentIDs_pids_rids(accident_test_sents_root, token_id, accident_test_sents_pkl3, pos_pid, role_rid)
+    get_sentIDs_pids_rids(earthquake_train_sents_root, token_id, earthquake_train_sents_pkl3, pos_pid, role_rid)
+    get_sentIDs_pids_rids(earthquake_test_sents_root, token_id, earthquake_test_sents_pkl3, pos_pid, role_rid)
+
+
+
 if __name__ == '__main__':
-    test2()
+    # test2()
+    test3()
