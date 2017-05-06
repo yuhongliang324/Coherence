@@ -214,5 +214,5 @@ class RNN(object):
 
         ret = {'x': x_full, 'y': y_full, 'lenx': lenx, 'leny': leny, 'is_train': is_train, 'prob': prob_trueval,
                'att': None, 'pred': pred, 'loss': loss, 'cost': cost, 'updates': updates,
-               'acc': acc}
+               'acc': acc, 'ctx': Ctx}
         return ret

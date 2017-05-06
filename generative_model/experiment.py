@@ -60,11 +60,12 @@ def classify(train_pkl, test_pkl, attention=False, hidden_dim=128, drop=0., num_
     att, pred, loss, cost, updates = variables['att'], variables['pred'], variables['loss'], variables['cost'],\
                                      variables['updates']
     acc = variables['acc']
+    Ctx = variables['ctx']
 
     xid, yid = T.iscalar(), T.iscalar()
     print 'Compiling function'
     train_model = theano.function(inputs=[xid, yid, is_train],
-                                  outputs=[prob, acc, cost], updates=updates,
+                                  outputs=[prob, acc, cost, Ctx], updates=updates,
                                   givens={
                                       x_full: xs_train[xid], y_full: ys_train[yid],
                                       lenx: lenxs_train[xid], leny: lenys_train[yid]
@@ -93,7 +94,7 @@ def classify(train_pkl, test_pkl, attention=False, hidden_dim=128, drop=0., num_
             for i in xrange(n_sent - 1):
                 xid, yid = disc[i], disc[i + 1]
 
-                prob, acc, cost = train_model(xid, yid, 1)
+                prob, acc, cost, Ctx = train_model(xid, yid, 1)
                 prob_report += prob
                 acc_report += acc
                 cost_report += cost
@@ -101,6 +102,7 @@ def classify(train_pkl, test_pkl, attention=False, hidden_dim=128, drop=0., num_
                 prob_epoch += prob
                 acc_epoch += acc
                 cost_epoch += cost
+                print Ctx.shape
 
                 iter_index += 1
                 if iter_index % report_iter == 0:
