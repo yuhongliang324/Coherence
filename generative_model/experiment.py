@@ -32,7 +32,7 @@ def load(pkl_file):
     return sents, E, xs, ys, lenxs, lenys, discs, disc_labels
 
 
-def classify(train_pkl, test_pkl, hidden_dim=128, drop=0., num_epoch=10):
+def classify(train_pkl, test_pkl, hidden_dim=128, drop=0., num_epoch=20):
     sents_train, E_old, xs_train, ys_train, lenxs_train, lenys_train, discs_train, disc_labels_train = load(train_pkl)
     sents_test, _, xs_test, ys_test, lenxs_test, lenys_test, discs_test, disc_labels_test = load(test_pkl)
 
