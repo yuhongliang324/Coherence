@@ -113,7 +113,7 @@ class RNN(object):
         return C_t, H_t
 
     def decode_step_att(self, Yc_t, C_tm1, H_tm1, Context_tm1, H_enc):
-        inp = T.concatenate(Yc_t, Context_tm1)
+        inp = T.concatenate([Yc_t, Context_tm1])
         i_t = T.nnet.sigmoid(T.dot(inp, self.W_dec_i) + T.dot(H_tm1, self.U_dec_i) + self.b_dec_i)
         f_t = T.nnet.sigmoid(T.dot(inp, self.W_dec_f) + T.dot(H_tm1, self.U_dec_f) + self.b_dec_f)
         o_t = T.nnet.sigmoid(T.dot(inp, self.W_dec_o) + T.dot(H_tm1, self.U_dec_o) + self.b_dec_o)
