@@ -3,6 +3,7 @@ __author__ = 'yuhongliang324'
 import cPickle, os, numpy, theano
 from theano import tensor as T
 from gen import RNN
+import argparse
 
 preprocessed_root = '../preprocessed'
 accident_train_pkl = os.path.join(preprocessed_root, 'accident_train2_final.pkl')
@@ -31,7 +32,7 @@ def load(pkl_file):
     return sents, E, xs, ys, lenxs, lenys, discs, disc_labels
 
 
-def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
+def classify(train_pkl, test_pkl, hidden_dim=128, drop=0., num_epoch=10):
     sents_train, E_old, xs_train, ys_train, lenxs_train, lenys_train, discs_train, disc_labels_train = load(train_pkl)
     sents_test, _, xs_test, ys_test, lenxs_test, lenys_test, discs_test, disc_labels_test = load(test_pkl)
 
@@ -48,7 +49,7 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
     E[: -1] = E_old
 
     n_class, input_dim = E_old.shape[0], E_old.shape[1]
-    model = RNN(E, input_dim, hidden_dim, n_class)
+    model = RNN(E, input_dim, hidden_dim, n_class, drop=drop)
     variables = model.build_model()
 
     x_full, y_full, lenx, leny, is_train, prob = variables['x'], variables['y'], variables['lenx'], variables['leny'],\
@@ -111,10 +112,10 @@ def classify(train_pkl, test_pkl, hidden_dim=256, num_epoch=10):
         cost_epoch /= iter_index
         print 'Training epoch = %d, prob = %.5f, acc = %.5f, cost = %.4f'\
               % (epoch_index + 1, prob_epoch, acc_epoch, cost_epoch)
-        validate(test_model, discs_test, disc_labels_test)
+        binary_classification(test_model, discs_test, disc_labels_test)
 
 
-def validate(test_model, discs_test, discs_labels_test):
+def binary_classification(test_model, discs_test, discs_labels_test):
     iter_index = 0
     prob_pred = []
     count = 0
@@ -155,7 +156,18 @@ def Acc_comp(y_actual, y_predicted):
 
 
 def test1():
-    classify(accident_train_pkl, accident_test_pkl)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-doc', type=str, default='a')
+    parser.add_argument('-hid', type=int, default=128)
+    parser.add_argument('-drop', type=float, default=0.)
+    args = parser.parse_args()
+    if args.doc.startswith('a'):
+        train_pkl = accident_train_pkl
+        test_pkl = accident_test_pkl
+    else:
+        train_pkl = earthquake_train_pkl
+        test_pkl = earthquake_test_pkl
+    classify(train_pkl, test_pkl, hidden_dim=args.hid, drop=args.drop)
 
 
 if __name__ == '__main__':

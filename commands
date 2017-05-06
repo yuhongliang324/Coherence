@@ -1,4 +1,0 @@
-nohup python -u train.py -model lstml -data accident > logs/lstm_accident.out 2>&1 &
-nohup python -u train.py -model lstml -data earthquake > logs/lstm_earthquake.out 2>&1 &
-nohup python -u train.py -model grul -data accident > logs/gru_accident.out 2>&1 &
-nohup python -u train.py -model grul -data earthquake > logs/gru_earthquake.out 2>&1 &
