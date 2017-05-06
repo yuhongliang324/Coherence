@@ -187,7 +187,7 @@ class RNN(object):
                                                           dtype=theano.config.floatX)])
         rep_enc = H_enc[-1]  # (hidden_dim)
         # H_dec: (leny - 1, hid_dim), Ctx: (leny - 1, hid_dim)
-        [_, H_dec, Ctx], _ = theano.scan(self.decode_step_att, sequences=Yc, non_sequences=H_enc,
+        [_, H_dec, Ctx], _ = theano.scan(self.decode_step_att, sequences=Yc, non_sequences=[H_enc],
                                          outputs_info=[T.zeros((self.hidden_dim,),
                                                                dtype=theano.config.floatX),
                                                        rep_enc,

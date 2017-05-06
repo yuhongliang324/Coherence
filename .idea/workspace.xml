@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d65838b0-3287-4750-8e3f-0a733e0c1c00" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/commands.txt" afterPath="$PROJECT_DIR$/commands.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generative_model/gen.py" afterPath="$PROJECT_DIR$/generative_model/gen.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -40,9 +39,11 @@
       <file leaf-file-name="gen.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generative_model/gen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.375">
-              <caret line="115" column="47" selection-start-line="115" selection-start-column="47" selection-end-line="115" selection-end-column="47" />
-              <folding />
+            <state vertical-scroll-proportion="0.5495283">
+              <caret line="189" column="98" selection-start-line="189" selection-start-column="98" selection-end-line="189" selection-end-column="98" />
+              <folding>
+                <element signature="e#5825#7863#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -542,7 +543,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
-          <folding />
+          <folding>
+            <element signature="e#5825#7863#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -790,9 +793,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/generative_model/gen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.375">
-          <caret line="115" column="47" selection-start-line="115" selection-start-column="47" selection-end-line="115" selection-end-column="47" />
-          <folding />
+        <state vertical-scroll-proportion="0.5495283">
+          <caret line="189" column="98" selection-start-line="189" selection-start-column="98" selection-end-line="189" selection-end-column="98" />
+          <folding>
+            <element signature="e#5825#7863#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
