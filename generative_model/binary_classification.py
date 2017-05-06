@@ -136,9 +136,10 @@ def validate(test_model, discs_test, discs_labels_test):
 def Acc_comp(y_actual, y_predicted):
     right = 0
     total = 0
-    for i in xrange(len(y_actual)):
+    size = len(y_actual)
+    for i in xrange(size):
         if y_actual[i] == 1:
-            for j in xrange(i + 1, y_actual.shape[0]):
+            for j in xrange(i + 1, size):
                 if y_actual[j] == 1:
                     break
                 else:

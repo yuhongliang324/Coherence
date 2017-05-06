@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d65838b0-3287-4750-8e3f-0a733e0c1c00" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generative_model/gen.py" afterPath="$PROJECT_DIR$/generative_model/gen.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generative_model/binary_classification.py" afterPath="$PROJECT_DIR$/generative_model/binary_classification.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Coherence.iws" />
@@ -36,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gen.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="gen.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generative_model/gen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29752067">
-              <caret line="131" column="36" selection-start-line="131" selection-start-column="36" selection-end-line="131" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="105" column="24" selection-start-line="105" selection-start-column="24" selection-end-line="105" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -58,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="binary_classification.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="binary_classification.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generative_model/binary_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="69" selection-start-line="64" selection-start-column="69" selection-end-line="64" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.6280992">
+              <caret line="141" column="39" selection-start-line="141" selection-start-column="39" selection-end-line="141" selection-end-column="39" />
               <folding>
                 <element signature="e#31#64#0" expanded="true" />
               </folding>
@@ -100,8 +100,8 @@
         <option value="$PROJECT_DIR$/lstm/neural_utils.py" />
         <option value="$PROJECT_DIR$/lstm/load_data.py" />
         <option value="$PROJECT_DIR$/generative_model/load_data.py" />
-        <option value="$PROJECT_DIR$/generative_model/binary_classification.py" />
         <option value="$PROJECT_DIR$/generative_model/gen.py" />
+        <option value="$PROJECT_DIR$/generative_model/binary_classification.py" />
       </list>
     </option>
   </component>
@@ -766,16 +766,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/generative_model/binary_classification.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="69" selection-start-line="64" selection-start-column="69" selection-end-line="64" selection-end-column="69" />
-          <folding>
-            <element signature="e#31#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lstm/optimize.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -788,9 +778,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/generative_model/gen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29752067">
-          <caret line="131" column="36" selection-start-line="131" selection-start-column="36" selection-end-line="131" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="105" column="24" selection-start-line="105" selection-start-column="24" selection-end-line="105" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generative_model/binary_classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6280992">
+          <caret line="141" column="39" selection-start-line="141" selection-start-column="39" selection-end-line="141" selection-end-column="39" />
+          <folding>
+            <element signature="e#31#64#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
