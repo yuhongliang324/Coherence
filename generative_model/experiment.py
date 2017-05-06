@@ -102,7 +102,7 @@ def classify(train_pkl, test_pkl, attention=False, hidden_dim=128, drop=0., num_
                 prob_epoch += prob
                 acc_epoch += acc
                 cost_epoch += cost
-                print Ctx.shape
+                print lenxs_train[xid], Ctx.shape
 
                 iter_index += 1
                 if iter_index % report_iter == 0:
