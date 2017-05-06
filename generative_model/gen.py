@@ -121,7 +121,7 @@ class RNN(object):
         C_t = i_t * C_t + f_t * C_tm1
         H_t = o_t * T.tanh(C_t)  # (hid_dim,)
         att = T.nnet.softmax(T.dot(H_enc, H_t))  # (lenx,)
-        Context_t = T.dot(att, H_enc)  # (hid_dim,)
+        Context_t = T.dot(att, H_enc)[0]  # (hid_dim,)
         return C_t, H_t, Context_t
 
     def build_model(self):
@@ -187,7 +187,7 @@ class RNN(object):
                                                           dtype=theano.config.floatX)])
         rep_enc = H_enc[-1]  # (hidden_dim)
         # H_dec: (leny - 1, hid_dim), Ctx: (leny - 1, hid_dim)
-        [_, H_dec, Ctx], _ = theano.scan(self.decode_step_att, sequences=[Yc], non_sequences=[H_enc],
+        [_, H_dec, Ctx], _ = theano.scan(self.decode_step_att, sequences=Yc, non_sequences=H_enc,
                                          outputs_info=[T.zeros((self.hidden_dim,),
                                                                dtype=theano.config.floatX),
                                                        rep_enc,
