@@ -51,8 +51,8 @@
       <file leaf-file-name="experiment.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generative_model/experiment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.74811083">
-              <caret line="104" column="40" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.06801008">
+              <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
               <folding>
                 <element signature="e#31#64#0" expanded="true" />
               </folding>
@@ -781,8 +781,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/generative_model/experiment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74811083">
-          <caret line="104" column="40" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.06801008">
+          <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
           <folding>
             <element signature="e#31#64#0" expanded="true" />
           </folding>
