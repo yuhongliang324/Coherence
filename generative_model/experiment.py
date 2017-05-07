@@ -138,7 +138,7 @@ def classify(train_pkl, test_pkl, attention=False, use_pos=False, use_role=False
         cost_epoch /= iter_index
         print 'Training epoch = %d, prob = %.5f, acc = %.5f, cost = %.4f'\
               % (epoch_index + 1, prob_epoch, acc_epoch, cost_epoch)
-        binary_classification(test_model, discs_test, disc_labels_test)
+        para_reconstruct(test_model, discs_test, disc_labels_test)
 
 
 def binary_classification(test_model, discs_test, discs_labels_test):
@@ -162,6 +162,32 @@ def binary_classification(test_model, discs_test, discs_labels_test):
     acc = Acc_comp(discs_labels_test, prob_pred)
 
     print 'Test Accuracy = %.5f' % acc
+
+
+def para_reconstruct(test_model, discs_test, discs_labels_test):
+    count = 0
+    for disc, label in zip(discs_test, discs_labels_test):
+        if label == 0:
+            continue
+        n_sent = len(disc)
+        xid = disc[0]
+        seq = []
+        for _ in xrange(n_sent - 1):
+            probmax = 0.
+            yid_max = 0
+            for j in xrange(1, n_sent):
+                yid = disc[j]
+                if yid in seq:
+                    continue
+                prob, acc, cost = test_model(xid, yid, 0)
+                if prob > probmax:
+                    probmax = prob
+                    yid_max = yid
+                seq.append(yid_max)
+        print disc[1:], seq
+        count += 1
+        if count % 10 == 0:
+            print count, '/', len(discs_test)
 
 
 def Acc_comp(y_actual, y_predicted):
