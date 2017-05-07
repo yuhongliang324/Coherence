@@ -183,7 +183,7 @@ def para_reconstruct(test_model, discs_test, discs_labels_test):
                 if prob > probmax:
                     probmax = prob
                     yid_max = yid
-                seq.append(yid_max)
+            seq.append(yid_max)
         print disc[1:], seq
         count += 1
         if count % 10 == 0:
