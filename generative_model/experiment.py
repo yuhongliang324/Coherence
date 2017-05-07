@@ -166,6 +166,7 @@ def binary_classification(test_model, discs_test, discs_labels_test):
 
 def para_reconstruct(test_model, discs_test, discs_labels_test):
     count = 0
+    acc_test = 0.
     for disc, label in zip(discs_test, discs_labels_test):
         if label == 0:
             continue
@@ -184,10 +185,14 @@ def para_reconstruct(test_model, discs_test, discs_labels_test):
                     probmax = prob
                     yid_max = yid
             seq.append(yid_max)
-        print disc[1:], seq
+        acc = Kendall(disc[1:], seq)
+        print disc[1:], seq, acc
+        acc_test += acc
         count += 1
         if count % 10 == 0:
             print count, '/', len(discs_test)
+    acc_test /= count
+    print 'Test Accuracy = %.5f' % acc_test
 
 
 def Acc_comp(y_actual, y_predicted):
@@ -205,6 +210,22 @@ def Acc_comp(y_actual, y_predicted):
                     total += 1.
     acc = right / total
     return acc
+
+
+def Kendall(seq_actual, seq_predict):
+    size = len(seq_actual)
+    gt_pairs = set()
+    for i in xrange(size - 1):
+        for j in xrange(i + 1, size):
+            gt_pairs.add((seq_actual[i], seq_actual[j]))
+    right = 0.
+    for i in xrange(size - 1):
+        for j in xrange(i + 1, size):
+            if (seq_predict[i], seq_predict[j]) in gt_pairs:
+                right += 1
+    acc = 2. * right / (size * (size - 1))
+    return acc
+
 
 
 def test1():
