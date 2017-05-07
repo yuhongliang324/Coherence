@@ -3,8 +3,34 @@ nohup python -u train.py -model lstml -data earthquake > logs/lstm_earthquake.ou
 nohup python -u train.py -model grul -data accident > logs/gru_accident.out 2>&1 &
 nohup python -u train.py -model grul -data earthquake > logs/gru_earthquake.out 2>&1 &
 
+------------------------------------------------------------------------------------------
+
+Seq2Seq:
+
 nohup python -u experiment.py -doc a > logs/seq2seq_accident.out 2>&1 &
 nohup python -u experiment.py -doc e > logs/seq2seq_earthquake.out 2>&1 &
 
+nohup python -u experiment.py -doc a -pos True > logs/seq2seq_accident_pos.out 2>&1 &
+nohup python -u experiment.py -doc e -pos True > logs/seq2seq_earthquake_pos.out 2>&1 &
+
+nohup python -u experiment.py -doc a -role True > logs/seq2seq_accident_role.out 2>&1 &
+nohup python -u experiment.py -doc e -role True > logs/seq2seq_earthquake_role.out 2>&1 &
+
+nohup python -u experiment.py -doc a -pos True -role True > logs/seq2seq_accident_pos_role.out 2>&1 &
+nohup python -u experiment.py -doc e -pos True -role True > logs/seq2seq_earthquake_pos_role.out 2>&1 &
+
+------------------------------------------------------------------------------------------
+
+Attention:
+
 nohup python -u experiment.py -doc a -att True > logs/att_accident.out 2>&1 &
 nohup python -u experiment.py -doc e -att True > logs/att_earthquake.out 2>&1 &
+
+nohup python -u experiment.py -doc a -att True -pos True > logs/att_accident_pos.out 2>&1 &
+nohup python -u experiment.py -doc e -att True -pos True > logs/att_earthquake_pos.out 2>&1 &
+
+nohup python -u experiment.py -doc a -att True -role True > logs/att_accident_role.out 2>&1 &
+nohup python -u experiment.py -doc e -att True -role True > logs/att_earthquake_role.out 2>&1 &
+
+nohup python -u experiment.py -doc a -att True -pos True -role True > logs/att_accident_pos_role.out 2>&1 &
+nohup python -u experiment.py -doc e -att True -pos True -role True > logs/att_earthquake_pos_role.out 2>&1 &

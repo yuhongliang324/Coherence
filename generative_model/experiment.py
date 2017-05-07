@@ -32,7 +32,7 @@ def load(pkl_file):
     return sents, E, xs, ys, lenxs, lenys, discs, disc_labels, pos, pos_xs, pos_ys, roles, role_xs, role_ys
 
 
-def classify(train_pkl, test_pkl, attention=False, use_pos=True, use_role=True, hidden_dim=128, drop=0., num_epoch=20):
+def classify(train_pkl, test_pkl, attention=False, use_pos=False, use_role=False, hidden_dim=128, drop=0., num_epoch=20):
 
     sents_train, E_old, xs_train, ys_train, lenxs_train, lenys_train, discs_train, disc_labels_train,\
     pos, pos_xs_train, pos_ys_train, roles, role_xs_train, role_ys_train = load(train_pkl)
@@ -187,6 +187,8 @@ def test1():
     parser.add_argument('-hid', type=int, default=128)
     parser.add_argument('-drop', type=float, default=0.)
     parser.add_argument('-att', type=bool, default=False)
+    parser.add_argument('-pos', type=bool, default=False)
+    parser.add_argument('-role', type=bool, default=False)
     args = parser.parse_args()
     print 'att', args.att
     if args.doc.startswith('a'):
@@ -195,7 +197,8 @@ def test1():
     else:
         train_pkl = earthquake_train_pkl
         test_pkl = earthquake_test_pkl
-    classify(train_pkl, test_pkl, attention=args.att, hidden_dim=args.hid, drop=args.drop)
+    classify(train_pkl, test_pkl, attention=args.att, hidden_dim=args.hid, drop=args.drop,
+             use_pos=args.pos, use_role=args.role)
 
 
 if __name__ == '__main__':
