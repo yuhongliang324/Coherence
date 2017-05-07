@@ -4,6 +4,8 @@ nohup python -u train.py -model grul -data accident > logs/gru_accident.out 2>&1
 nohup python -u train.py -model grul -data earthquake > logs/gru_earthquake.out 2>&1 &
 
 ------------------------------------------------------------------------------------------
+Binary Classification
+------------------------------------------------------------------------------------------
 
 Seq2Seq:
 
@@ -34,3 +36,39 @@ nohup python -u experiment.py -doc e -att True -role True > logs/att_earthquake_
 
 nohup python -u experiment.py -doc a -att True -pos True -role True > logs/att_accident_pos_role.out 2>&1 &
 nohup python -u experiment.py -doc e -att True -pos True -role True > logs/att_earthquake_pos_role.out 2>&1 &
+
+
+------------------------------------------------------------------------------------------
+Paragraph Reconstruction
+------------------------------------------------------------------------------------------
+
+Seq2Seq:
+
+nohup python -u experiment.py -rec True -doc a > rec_logs/seq2seq_accident.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e > rec_logs/seq2seq_earthquake.out 2>&1 &
+
+nohup python -u experiment.py -rec True -doc a -pos True > rec_logs/seq2seq_accident_pos.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e -pos True > rec_logs/seq2seq_earthquake_pos.out 2>&1 &
+
+nohup python -u experiment.py -rec True -doc a -role True > rec_logs/seq2seq_accident_role.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e -role True > rec_logs/seq2seq_earthquake_role.out 2>&1 &
+
+nohup python -u experiment.py -rec True -doc a -pos True -role True > rec_logs/seq2seq_accident_pos_role.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e -pos True -role True > rec_logs/seq2seq_earthquake_pos_role.out 2>&1 &
+
+------------------------------------------------------------------------------------------
+
+Attention:
+
+nohup python -u experiment.py -rec True -doc a -att True > rec_logs/att_accident.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e -att True > rec_logs/att_earthquake.out 2>&1 &
+
+nohup python -u experiment.py -rec True -doc a -att True -pos True > rec_logs/att_accident_pos.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e -att True -pos True > rec_logs/att_earthquake_pos.out 2>&1 &
+
+nohup python -u experiment.py -rec True -doc a -att True -role True > rec_logs/att_accident_role.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e -att True -role True > rec_logs/att_earthquake_role.out 2>&1 &
+
+nohup python -u experiment.py -doc a -att True -pos True -role True > rec_logs/att_accident_pos_role.out 2>&1 &
+nohup python -u experiment.py -doc e -att True -pos True -role True > rec_logs/att_earthquake_pos_role.out 2>&1 &
+
