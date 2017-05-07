@@ -11,11 +11,16 @@ from lstm.theano_utils import Adam, Adam2, RMSprop, SGD, dropout
 
 class RNN(object):
     def __init__(self, E, input_dim, hidden_dim, n_class, attention=False,
-                 n_roles=0, hidden_dim_role=50, lamb=0., update='adam2', drop=0.2):
+                 n_pos=0, n_roles=0, syntactic_dim=50, lamb=0., update='adam2', drop=0.2):
         self.E = theano.shared(E, borrow=True)
         self.input_dim, self.hidden_dim = input_dim, hidden_dim
+        if n_pos > 0:
+            self.input_dim += syntactic_dim
+        if n_roles > 0:
+             self.input_dim += syntactic_dim
         self.n_class = n_class
         self.attention = attention
+        self.n_pos, self.n_roles = n_pos, n_roles
         self.lamb = lamb
         self.drop = drop
         self.update = update
@@ -37,6 +42,14 @@ class RNN(object):
         else:
             ipd = self.input_dim
 
+        if n_pos > 0:
+            self.Ep, _ = self.init_para(n_pos + 1, syntactic_dim)
+            self.theta.append(self.Ep)
+
+        if n_roles > 0:
+            self.Er, _ = self.init_para(n_roles + 1, syntactic_dim)
+            self.theta.append(self.Er)
+
         self.W_dec_i, self.b_dec_i, self.U_dec_i, \
         self.W_dec_f, self.b_dec_f, self.U_dec_f, \
         self.W_dec_o, self.b_dec_o, self.U_dec_o, \
@@ -45,10 +58,7 @@ class RNN(object):
                        self.W_dec_f, self.b_dec_f, self.U_dec_f,
                        self.W_dec_o, self.b_dec_o, self.U_dec_o,
                        self.W_dec_c, self.b_dec_c, self.U_dec_c]
-        '''
-        if n_roles > 0:
-            self.R, _ = self.init_para(n_roles, hidden_dim_role)
-            self.theta.append(self.R)'''
+
         if self.attention:
             self.W, self.b = self.init_para(self.hidden_dim * 2, self.n_class)
         else:
@@ -124,7 +134,7 @@ class RNN(object):
         Context_t = T.dot(att, H_enc)[0]  # (hid_dim,)
         return C_t, H_t, Context_t
 
-    def build_model(self):
+    def init_symbols(self):
         x_full = T.ivector()  # (max_len,)
         y_full = T.ivector()  # (max_len,)
         lenx = T.iscalar()
@@ -134,6 +144,44 @@ class RNN(object):
         X = self.E[x]  # (lenx, 300)
         Yc = self.E[y[:-1]]  # (leny - 1, 300)
         yn = y[1:]  # (leny - 1,)
+
+        ret = {'x_full': x_full, 'y_full': y_full, 'lenx': lenx, 'leny': leny,
+               'x': x, 'y': y, 'yn': yn,
+               'x_pos_full': None, 'y_pos_full': None, 'x_role_full': None, 'y_role_full': None}
+
+        if self.n_pos > 0:
+            x_pos_full = T.ivector()
+            y_pos_full = T.ivector()
+            x_pos = x_pos_full[: lenx]
+            y_pos = y_pos_full[: leny]
+            X_pos = self.Ep[x_pos]
+            Yc_pos = self.Ep[y_pos[:-1]]
+            X = T.concatenate([X, X_pos], axis=1)
+            Yc = T.concatenate([Yc, Yc_pos], axis=1)
+            ret['x_pos_full'], ret['y_pos_full'] = x_pos_full, y_pos_full
+
+        if self.n_roles > 0:
+            x_role_full = T.ivector()
+            y_role_full = T.ivector()
+            x_role = x_role_full[: lenx]
+            y_role = y_role_full[: leny]
+            X_role = self.Er[x_role]
+            Yc_role = self.Er[y_role[:-1]]
+            X = T.concatenate([X, X_role], axis=1)
+            Yc = T.concatenate([Yc, Yc_role], axis=1)
+            ret['x_role_full'], ret['y_role_full'] = x_role_full, y_role_full
+
+        ret['X'], ret['Yc'] = X, Yc  # X: (lenx, feat), Yc: (leny - 1, feat)
+
+        return ret
+
+    def build_model(self):
+        symbols = self.init_symbols()
+        x_full, y_full, lenx, leny, x, y\
+            = symbols['x_full'], symbols['y_full'], symbols['lenx'], symbols['leny'], symbols['x'], symbols['y']
+        x_pos_full, y_pos_full, x_role_full, y_role_full\
+            = symbols['x_pos_full'], symbols['y_pos_full'], symbols['x_role_full'], symbols['y_role_full']
+        X, Yc, yn = symbols['X'], symbols['Yc'], symbols['yn']
 
         [_, H_enc], _ = theano.scan(self.encode_step, sequences=X,
                                     outputs_info=[T.zeros((self.hidden_dim,),
@@ -164,21 +212,20 @@ class RNN(object):
 
         updates = self.optimize(cost, self.theta)
 
-        ret = {'x': x_full, 'y': y_full, 'lenx': lenx, 'leny': leny, 'is_train': is_train, 'prob': prob_trueval,
+        ret = {'x': x_full, 'y': y_full, 'lenx': lenx, 'leny': leny,
+               'x_pos': x_pos_full, 'y_pos': y_pos_full, 'x_role': x_role_full, 'y_role': y_role_full,
+               'is_train': is_train, 'prob': prob_trueval,
                'att': None, 'pred': pred, 'loss': loss, 'cost': cost, 'updates': updates,
                'acc': acc}
         return ret
 
     def build_model_att(self):
-        x_full = T.ivector()  # (max_len,)
-        y_full = T.ivector()  # (max_len,)
-        lenx = T.iscalar()
-        leny = T.iscalar()
-        x = x_full[: lenx]  # (lenx,)
-        y = y_full[: leny]  # (leny,)
-        X = self.E[x]  # (lenx, 300)
-        Yc = self.E[y[:-1]]  # (leny - 1, 300)
-        yn = y[1:]  # (leny - 1,)
+        symbols = self.init_symbols()
+        x_full, y_full, lenx, leny, x, y\
+            = symbols['x_full'], symbols['y_full'], symbols['lenx'], symbols['leny'], symbols['x'], symbols['y']
+        x_pos_full, y_pos_full, x_role_full, y_role_full\
+            = symbols['x_pos_full'], symbols['y_pos_full'], symbols['x_role_full'], symbols['y_role_full']
+        X, Yc, yn = symbols['X'], symbols['Yc'], symbols['yn']
 
         [_, H_enc], _ = theano.scan(self.encode_step, sequences=X,
                                     outputs_info=[T.zeros((self.hidden_dim,),
@@ -212,7 +259,9 @@ class RNN(object):
 
         updates = self.optimize(cost, self.theta)
 
-        ret = {'x': x_full, 'y': y_full, 'lenx': lenx, 'leny': leny, 'is_train': is_train, 'prob': prob_trueval,
+        ret = {'x': x_full, 'y': y_full, 'lenx': lenx, 'leny': leny,
+               'x_pos': x_pos_full, 'y_pos': y_pos_full, 'x_role': x_role_full, 'y_role': y_role_full,
+               'is_train': is_train, 'prob': prob_trueval,
                'att': None, 'pred': pred, 'loss': loss, 'cost': cost, 'updates': updates,
-               'acc': acc, 'ctx': Ctx}
+               'acc': acc}
         return ret

@@ -6,15 +6,15 @@ from gen import RNN
 import argparse
 
 preprocessed_root = '../preprocessed'
-accident_train_pkl = os.path.join(preprocessed_root, 'accident_train2_final.pkl')
-accident_test_pkl = os.path.join(preprocessed_root, 'accident_test2_final.pkl')
-earthquake_train_pkl = os.path.join(preprocessed_root, 'earthquake_train2_final.pkl')
-earthquake_test_pkl = os.path.join(preprocessed_root, 'earthquake_test2_final.pkl')
+accident_train_pkl = os.path.join(preprocessed_root, 'accident_train3_final.pkl')
+accident_test_pkl = os.path.join(preprocessed_root, 'accident_test3_final.pkl')
+earthquake_train_pkl = os.path.join(preprocessed_root, 'earthquake_train3_final.pkl')
+earthquake_test_pkl = os.path.join(preprocessed_root, 'earthquake_test3_final.pkl')
 
 
 def load(pkl_file):
     reader = open(pkl_file)
-    sents, E, xs, ys, discs, disc_labels = cPickle.load(reader)
+    sents, E, xs, ys, discs, disc_labels, pos, pos_xs, pos_ys, roles, role_xs, role_ys = cPickle.load(reader)
     reader.close()
     lenxs, lenys = [], []
     maxlen = xs.shape[1]
@@ -29,12 +29,25 @@ def load(pkl_file):
         lenys.append(lenx + 1)
     lenxs = numpy.asarray(lenxs, dtype='int32')
     lenys = numpy.asarray(lenys, dtype='int32')
-    return sents, E, xs, ys, lenxs, lenys, discs, disc_labels
+    return sents, E, xs, ys, lenxs, lenys, discs, disc_labels, pos, pos_xs, pos_ys, roles, role_xs, role_ys
 
 
-def classify(train_pkl, test_pkl, attention=False, hidden_dim=128, drop=0., num_epoch=20):
-    sents_train, E_old, xs_train, ys_train, lenxs_train, lenys_train, discs_train, disc_labels_train = load(train_pkl)
-    sents_test, _, xs_test, ys_test, lenxs_test, lenys_test, discs_test, disc_labels_test = load(test_pkl)
+def classify(train_pkl, test_pkl, attention=False, use_pos=True, use_role=True, hidden_dim=128, drop=0., num_epoch=20):
+
+    sents_train, E_old, xs_train, ys_train, lenxs_train, lenys_train, discs_train, disc_labels_train,\
+    pos, pos_xs_train, pos_ys_train, roles, role_xs_train, role_ys_train = load(train_pkl)
+
+    sents_test, _, xs_test, ys_test, lenxs_test, lenys_test, discs_test, disc_labels_test,\
+    _, pos_xs_test, pos_ys_test, _, role_xs_test, role_ys_test = load(test_pkl)
+
+    if use_pos:
+        n_pos = len(pos) + 1
+    else:
+        n_pos = 0
+    if use_role:
+        n_roles = len(roles) + 1
+    else:
+        n_roles = 0
 
     xs_train = theano.shared(xs_train, borrow=True)
     ys_train = theano.shared(ys_train, borrow=True)
@@ -49,7 +62,7 @@ def classify(train_pkl, test_pkl, attention=False, hidden_dim=128, drop=0., num_
     E[: -1] = E_old
 
     n_class, input_dim = E_old.shape[0], E_old.shape[1]
-    model = RNN(E, input_dim, hidden_dim, n_class, attention=attention, drop=drop)
+    model = RNN(E, input_dim, hidden_dim, n_class, n_pos=n_pos, n_roles=n_roles, attention=attention, drop=drop)
     if attention:
         variables = model.build_model_att()
     else:
@@ -59,24 +72,34 @@ def classify(train_pkl, test_pkl, attention=False, hidden_dim=128, drop=0., num_
                                                  variables['is_train'], variables['prob']
     att, pred, loss, cost, updates = variables['att'], variables['pred'], variables['loss'], variables['cost'],\
                                      variables['updates']
+    x_pos_full, y_pos_full, x_role_full, y_role_full\
+        = variables['x_pos'], variables['y_pos'], variables['x_role'], variables['y_role']
     acc = variables['acc']
 
     xid, yid = T.iscalar(), T.iscalar()
     print 'Compiling function'
+    givens = {x_full: xs_train[xid], y_full: ys_train[yid], lenx: lenxs_train[xid], leny: lenys_train[yid]}
+    if use_pos:
+        givens[x_pos_full] = theano.shared(pos_xs_train, borrow=True)[xid]
+        givens[y_pos_full] = theano.shared(pos_ys_train, borrow=True)[yid]
+    if use_role:
+        givens[x_role_full] = theano.shared(role_xs_train, borrow=True)[xid]
+        givens[y_role_full] = theano.shared(role_ys_train, borrow=True)[yid]
     train_model = theano.function(inputs=[xid, yid, is_train],
                                   outputs=[prob, acc, cost], updates=updates,
-                                  givens={
-                                      x_full: xs_train[xid], y_full: ys_train[yid],
-                                      lenx: lenxs_train[xid], leny: lenys_train[yid]
-                                  },
+                                  givens=givens,
                                   on_unused_input='ignore', mode='FAST_RUN')
     print 'Compilation done 1'
+    givens = {x_full: xs_test[xid], y_full: ys_test[yid], lenx: lenxs_test[xid], leny: lenys_test[yid]}
+    if use_pos:
+        givens[x_pos_full] = theano.shared(pos_xs_test, borrow=True)[xid]
+        givens[y_pos_full] = theano.shared(pos_ys_test, borrow=True)[yid]
+    if use_role:
+        givens[x_role_full] = theano.shared(role_xs_test, borrow=True)[xid]
+        givens[y_role_full] = theano.shared(role_ys_test, borrow=True)[yid]
     test_model = theano.function(inputs=[xid, yid, is_train],
                                  outputs=[prob, acc, cost],
-                                 givens={
-                                     x_full: xs_test[xid], y_full: ys_test[yid],
-                                     lenx: lenxs_test[xid], leny: lenys_test[yid]
-                                 },
+                                 givens=givens,
                                  on_unused_input='ignore', mode='FAST_RUN')
     print 'Compilation done 2'
 
