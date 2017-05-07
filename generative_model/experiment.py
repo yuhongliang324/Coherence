@@ -189,6 +189,7 @@ def para_reconstruct(test_model, discs_test, discs_labels_test):
                     probmax = prob
                     yid_max = yid
             seq.append(yid_max)
+            xid = yid_max
         acc = Kendall(disc[1:], seq)
         acc_test += acc
         count += 1
