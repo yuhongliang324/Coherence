@@ -65,7 +65,7 @@ class RNN(object):
             self.W, self.b = self.init_para(self.hidden_dim, self.n_class)
         self.theta += [self.W, self.b]
 
-        print 'lambda =', self.lamb, 'last =', '#class =', self.n_class, 'drop =', self.drop, 'update =', self.update
+        print 'input_dim =', self.input_dim, 'lambda =', self.lamb, 'last =', '#class =', self.n_class, 'drop =', self.drop, 'update =', self.update
 
         if self.update == 'adam':
             self.optimize = Adam
