@@ -69,6 +69,6 @@ nohup python -u experiment.py -rec True -doc e -att True -pos True > rec_logs/at
 nohup python -u experiment.py -rec True -doc a -att True -role True > rec_logs/att_accident_role.out 2>&1 &
 nohup python -u experiment.py -rec True -doc e -att True -role True > rec_logs/att_earthquake_role.out 2>&1 &
 
-nohup python -u experiment.py -doc a -att True -pos True -role True > rec_logs/att_accident_pos_role.out 2>&1 &
-nohup python -u experiment.py -doc e -att True -pos True -role True > rec_logs/att_earthquake_pos_role.out 2>&1 &
+nohup python -u experiment.py -rec True -doc a -att True -pos True -role True > rec_logs/att_accident_pos_role.out 2>&1 &
+nohup python -u experiment.py -rec True -doc e -att True -pos True -role True > rec_logs/att_earthquake_pos_role.out 2>&1 &
 
